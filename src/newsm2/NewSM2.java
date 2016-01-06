@@ -29,10 +29,13 @@ public class NewSM2 {
 //		interrupt.waitKey();
 		
 		new CreditApproval(ctrl, caeConfig).run();			
-		interrupt.waitKey();
-		
+//		interrupt.waitKey();
+
 		new Contract(ctrl, caeConfig).run();				
 		interrupt.waitKey();
+		
+//		new LimitSet(ctrl, caeConfig).run();				
+//		interrupt.waitKey();
 		
 		ctrl.disconnect();
 	}

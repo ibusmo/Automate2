@@ -39,7 +39,7 @@ public class LogTag {
 		SBROSECAssign, 
 		CMDEPTAssign, 
 		Comment, 
-		GotoApp, VerifyCommitment, VerifyAppState, RCOM, Condition, ConditionVerify, CMGRAssign, MakeContract, ContractVerify, PrepareAccept
+		GotoApp, VerifyCommitment, VerifyAppState, RCOM, Condition, ConditionVerify, CMGRAssign, MakeContract, ContractVerify, PrepareAccept, SetBudget
 	}
 	public enum logtab{
 		WorkBox,
