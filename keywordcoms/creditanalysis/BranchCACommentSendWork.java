@@ -12,11 +12,11 @@ import log.LogTag.logaction;
 import log.LogTag.logexestatus;
 import testdata.CellTag.CreditTask;
 
-public class SecCACommentSendWork extends KeywordsCOM {
+public class BranchCACommentSendWork extends KeywordsCOM {
 	
 	private CreditTask creditPath;
 	
-	public SecCACommentSendWork(Controller ctrl, CreditTask creditPath) {
+	public BranchCACommentSendWork(Controller ctrl, CreditTask creditPath) {
 		super.ctrl = ctrl;
 		
 		super.logoperation 		= log.LogTag.logoperation.SendWork;
@@ -44,7 +44,7 @@ public class SecCACommentSendWork extends KeywordsCOM {
 			String defaultPath = ctrl.verifyData.getValueByXpath("//*[@id='btnSendDiv']/table[2]/tbody/tr[1]/td/div[2]/input");
 			sendToLogCustom(logexestatus.PASS, logaction.Dropdown, "********************** :defaultPath iLog - " + defaultPath);
 			
-			ctrl.screenCapture.saveShotImage(ctrl.pathVariable.getRelativeLog() + "_SecApproval_pre" + ".jpg");
+			ctrl.screenCapture.saveShotImage(ctrl.pathVariable.getRelativeLog() + "_BranchApproval_pre" + ".jpg");
 			
 			switch(creditPath){
 				case RCOM:
@@ -75,7 +75,7 @@ public class SecCACommentSendWork extends KeywordsCOM {
 					break;
 			}
 
-			ctrl.screenCapture.saveShotImage(ctrl.pathVariable.getRelativeLog() + "_SecApproval_pos" + ".jpg");
+			ctrl.screenCapture.saveShotImage(ctrl.pathVariable.getRelativeLog() + "_BranchApproval_pos" + ".jpg");
 			
 			ctrl.button.xpath("//*[@id='btnSendDiv']/table[3]/tbody/tr/td/button");
 			sendToLogCustom(logexestatus.PASS, logaction.Click, "send ส่งงานต่อ");

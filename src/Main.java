@@ -1,30 +1,32 @@
 import newsm2.NewSM2;
+import testmodule.DataDrive;
+import testmodule.TestDrive;
+
+import java.time.LocalDateTime;
+
+import csm.*;
 import variable.PathVariable;
 
+@SuppressWarnings("unused")
 public class Main {
 	
 	public static void main(String[] args) {
 		
-		NewSM2 com = new NewSM2(getAssignedPath());
-		com.run();
+		new NewSM2(getAssignedPath()).run();
 		
-//		TestModule test = new TestModule(getAssignedPath());
-//		test.run();
-
 		return ;		
 	}
-
+	
 	private static PathVariable getAssignedPath() {
-		String LORbaseURL = "http://172.31.1.41:55011/LOR/";
-		String CMSbaseURL = "http://172.31.1.42:9080/CMS/";
-		String pathOffset = "C:\\testdata\\";
-		String pathSpecify = "cat";
 		
 		PathVariable pathVariable = new PathVariable();
-		pathVariable.setExcelPath(pathOffset + pathSpecify + ".xls");
-		pathVariable.setLogPath(pathOffset + pathSpecify + ".log");
-		pathVariable.setLORBaseURL(LORbaseURL);
-		pathVariable.setCMSBaseURL(CMSbaseURL);
+		pathVariable.setLORBaseURL("http://172.31.1.41:55011/LOR/");
+		pathVariable.setCMSBaseURL("http://172.31.1.42:9080/CMS/");
+		pathVariable.setOffsetPath("C:\\testdata\\LOR2SIT2");
+		pathVariable.setExcelType(".xls");
+		pathVariable.setLogType(".log");
+		
+		pathVariable.setSpecify("4");
 		
 		return pathVariable;
 	}

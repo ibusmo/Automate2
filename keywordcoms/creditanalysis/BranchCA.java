@@ -5,9 +5,9 @@ import controller.Controller;
 import testdata.DataElementObj;
 import testdata.CellTag.inputType;
 
-public class SecCA extends KeywordsCOM {
+public class BranchCA extends KeywordsCOM {
 	
-	public SecCA(Controller ctrl) {
+	public BranchCA(Controller ctrl) {
 		super.ctrl = ctrl;
 
 		super.logoperation 		= log.LogTag.logoperation.CA;
@@ -19,7 +19,7 @@ public class SecCA extends KeywordsCOM {
 	
 	@Override
 	protected boolean preCondition(DataElementObj obj) {
-
+		
 		// ปุ่ม CA แบบย่อ -แบบเต็ม
 		if(obj.type==inputType.button){
 			if(obj.data.contains("บันทึก")){

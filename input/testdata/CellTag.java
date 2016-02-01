@@ -121,11 +121,11 @@ public class CellTag {
 	}
 	
 	public enum CATask{
-		auto, section, branch
+		section, branch, autoBranch, autoSection
 	}
 
 	public enum CreditTask{
-		KSCCOM, RCOM, BCOM
+		KSCCOM, RCOM, BCOM, autoKSCCOM, autoRCOM, autoBCOM
 	}
 	
 	public enum Commitment{

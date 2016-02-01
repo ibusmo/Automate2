@@ -192,8 +192,12 @@ public class COMAutoElementConfig {
 				else if(obj.remark.toLowerCase().matches("branch")){
 					CAPath = CATask.branch;
 				}
-				else if(obj.remark.toLowerCase().matches("auto")){
-					CAPath = CATask.auto;
+				// auto (section) - auto (branch)
+				else if(obj.remark.toLowerCase().contains("section")){
+					CAPath = CATask.autoSection;
+				}
+				else if(obj.remark.toLowerCase().contains("branch")){
+					CAPath = CATask.autoBranch;
 				}
 				break;
 			case Credit:
@@ -205,6 +209,16 @@ public class COMAutoElementConfig {
 				}
 				else if(obj.remark.toLowerCase().matches("bcom")){
 					CreditPath = CreditTask.BCOM;
+				}
+				// auto (KSCCOM) - auto (RCOM) - auto (BCOM)
+				else if(obj.remark.toLowerCase().contains("ksccom")){
+					CreditPath = CreditTask.autoKSCCOM;
+				}
+				else if(obj.remark.toLowerCase().contains("rcom")){
+					CreditPath = CreditTask.autoRCOM;
+				}
+				else if(obj.remark.toLowerCase().contains("bcom")){
+					CreditPath = CreditTask.autoBCOM;
 				}
 				break;
 			case Commitment:

@@ -119,8 +119,8 @@ public class CSMDuplicateTest {
 		String pathSpecify = "cat";
 		
 		PathVariable pathVariable = new PathVariable();
-		pathVariable.setExcelPath(pathOffset + pathSpecify + ".xls");
-		pathVariable.setLogPath(pathOffset + pathSpecify + ".log");
+		pathVariable.setExcelName(pathOffset + pathSpecify + ".xls");
+		pathVariable.setLogName(pathOffset + pathSpecify + ".log");
 		pathVariable.setLORBaseURL(LORbaseURL);
 		pathVariable.setCMSBaseURL(CMSbaseURL);
 		

@@ -14,7 +14,7 @@ import testdata.CellTag.CATask;
 
 public class VerifyAndCommitmentSendWork extends KeywordsCOM {
 	
-	CATask cAPath;
+	private CATask cAPath;
 	
 	public VerifyAndCommitmentSendWork(Controller ctrl, CATask cAPath) {
 		super.ctrl = ctrl;
@@ -24,7 +24,6 @@ public class VerifyAndCommitmentSendWork extends KeywordsCOM {
 		super.logsubtab 		= log.LogTag.logsubtab.None;	
 		
 		this.cAPath = cAPath;
-
 	}
 	
 	@Override
@@ -38,11 +37,13 @@ public class VerifyAndCommitmentSendWork extends KeywordsCOM {
 			sendToLogCustom(logexestatus.PASS, logaction.Click, "Tab ส่งงาน");
 			
 			alert();
+			
+			String defaultPath = ctrl.verifyData.getValueByXpath("//*[@id='btnSendDiv']/table[2]/tbody/tr[1]/td/div[2]/input");
+			sendToLogCustom(logexestatus.PASS, logaction.Dropdown, "********************** :defaultPath iLog - " + defaultPath);	
+
+			ctrl.screenCapture.saveShotImage(ctrl.pathVariable.getRelativeLog() + "_CA_pre" + ".jpg");
 
 			switch(cAPath){
-				case auto:
-					sendToLogCustom(logexestatus.PASS, logaction.Dropdown, ":กรุณาเลือกทางเลือก = auto");
-					break;
 				case branch:
 					ctrl.dropdown.robotByXpath("//*[@id='btnSendDiv']/table[2]/tbody/tr[1]/td/div[2]/input", 2);
 					sendToLogCustom(logexestatus.PASS, logaction.Dropdown, ":กรุณาเลือกทางเลือก = ส่งงานไปวิเคราะห์ที่สาขา");	
@@ -51,10 +52,21 @@ public class VerifyAndCommitmentSendWork extends KeywordsCOM {
 					ctrl.dropdown.robotByXpath("//*[@id='btnSendDiv']/table[2]/tbody/tr[1]/td/div[2]/input", 3);
 					sendToLogCustom(logexestatus.PASS, logaction.Dropdown, ":กรุณาเลือกทางเลือก = ส่งงานไปวิเคราะห์ที่เขต");
 					break;
+					
+				case autoSection:
+					sendToLogCustom(logexestatus.PASS, logaction.Dropdown, ":กรุณาเลือกทางเลือก = Auto Section");
+					break;
+				case autoBranch:
+					sendToLogCustom(logexestatus.PASS, logaction.Dropdown, ":กรุณาเลือกทางเลือก = Auto Branch");
+					break;
+					
 				default:
 					sendToLogCustom(logexestatus.FAIL, logaction.Dropdown, "งงกับทางเลือกมาก");
 					return false;
+					
 			}
+			
+			ctrl.screenCapture.saveShotImage(ctrl.pathVariable.getRelativeLog() + "_CA_pos" + ".jpg");
 			
 			ctrl.button.xpath("//*[@id='btnSendDiv']/table[3]/tbody/tr/td/button");
 			sendToLogCustom(logexestatus.PASS, logaction.Click, "send ส่งงานต่อ");

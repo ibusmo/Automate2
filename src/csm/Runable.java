@@ -1,12 +1,12 @@
 package csm;
 import variable.PathVariable;
 
-class Runable implements Runnable {
+public class Runable implements Runnable {
 	private Thread t;
 	private String username;
 	private String cif;
 
-	Runable(String username, String cif) {
+	public Runable(String username, String cif) {
 		this.username = username;
 		this.cif = cif;
 		System.out.println("Creating " + username + " " + cif);
@@ -40,8 +40,8 @@ class Runable implements Runnable {
 		String pathSpecify = "tc";
 		
 		PathVariable pathVariable = new PathVariable();
-		pathVariable.setExcelPath(pathOffset + pathSpecify + ".xls");
-		pathVariable.setLogPath(pathOffset + pathSpecify + ".log");
+		pathVariable.setExcelName(pathOffset + pathSpecify + ".xls");
+		pathVariable.setLogName(pathOffset + pathSpecify + ".log");
 		pathVariable.setLORBaseURL(LORbaseURL);
 		pathVariable.setCMSBaseURL(CMSbaseURL);
 		

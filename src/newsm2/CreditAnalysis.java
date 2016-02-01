@@ -2,8 +2,13 @@ package newsm2;
 import com.SystemBase;
 
 import controller.Controller;
+import creditanalysis.BranchCA;
+import creditanalysis.BranchCAComment;
+import creditanalysis.BranchCACommentSendWork;
+import creditanalysis.BranchCASendWork;
 import creditanalysis.SecCA;
 import creditanalysis.SecCAComment;
+import creditanalysis.SecCACommentSendWork;
 import creditanalysis.SecCASendWork;
 import creditanalysis.SecCMDeptToCMAutoAssign;
 import creditanalysis.SecSBROSecToCMDeptAssign;
@@ -25,9 +30,18 @@ public class CreditAnalysis extends BaseApplication {
 	private boolean creditAnalysis() {
 		if (!caeConfig.runableFlag) return false;
 		switch (caeConfig.CAPath) {
+
+			case autoBranch:
+				ctrl.logCat.sendToLog("auto branch");
 			case branch:
+				ctrl.logCat.sendToLog("branch");
+				caeConfig.runableFlag = verifyState("NEWSM2BRO", "วิเคราะห์สินเชื่อ(ในCA)");
+				branchCA();
+				branchCAComment();				
 				break;
-				
+
+			case autoSection:
+				ctrl.logCat.sendToLog("auto section");
 			case section:
 				ctrl.logCat.sendToLog("section");
 				caeConfig.runableFlag = verifyState("NEWSM2SBRO", "เลือกส่งงานต่อ");
@@ -45,6 +59,9 @@ public class CreditAnalysis extends BaseApplication {
 		return caeConfig.runableFlag;
 	}
 
+	/*
+	 *												Section Credit Analysis 
+	 */
 	private boolean secSBROToSBROSecAssign() {
 		openBrowser(SystemBase.LOR);
 		login(caeConfig.SBRO, SystemBase.LOR);
@@ -118,11 +135,50 @@ public class CreditAnalysis extends BaseApplication {
 		
 		if (!caeConfig.runableFlag)
 			return false;
-		caeConfig.runableFlag = new SecCASendWork(ctrl).execute();
+		caeConfig.runableFlag = new SecCACommentSendWork(ctrl, caeConfig.CreditPath).execute();
 
 		logout();
 		
 		return caeConfig.runableFlag;
 	}
 
+	/*
+	 *												Branch Credit Analysis 
+	 */
+	private boolean branchCA() {
+		openBrowser(SystemBase.LOR);
+		login(caeConfig.BRO, SystemBase.LOR);
+		gotoApp();
+
+		if (!caeConfig.runableFlag)
+			return false;
+		caeConfig.runableFlag = new BranchCA(ctrl).execute();
+
+		if (!caeConfig.runableFlag)
+			return false;
+		caeConfig.runableFlag = new BranchCASendWork(ctrl).execute();
+
+		logout();
+
+		return caeConfig.runableFlag;
+	}
+	
+	private boolean branchCAComment() {
+		openBrowser(SystemBase.LOR);
+		login(caeConfig.SBRO, SystemBase.LOR);
+		gotoApp();
+		
+		if (!caeConfig.runableFlag)
+			return false;
+		caeConfig.runableFlag = new BranchCAComment(ctrl).execute();
+		
+		if (!caeConfig.runableFlag)
+			return false;
+		caeConfig.runableFlag = new BranchCACommentSendWork(ctrl, caeConfig.CreditPath).execute();
+
+		logout();
+		
+		return caeConfig.runableFlag;
+	}
+	
 }

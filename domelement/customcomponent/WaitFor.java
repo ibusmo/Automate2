@@ -1,6 +1,7 @@
 package customcomponent;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.remote.UnreachableBrowserException;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -13,23 +14,47 @@ public class WaitFor{
 	}
 	
 	public void element(By obj){
-		wait.until(ExpectedConditions.visibilityOfElementLocated(obj));
+		try{
+			wait.until(ExpectedConditions.visibilityOfElementLocated(obj));
+		}catch(UnreachableBrowserException e){
+			
+		}
 	}
 	
 	public void id(String id){
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(id)));
+		try{
+			wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(id)));
+		}catch(UnreachableBrowserException e){
+			
+		}
 	}
 	public void name(String name){
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.name(name)));
+		try{
+			wait.until(ExpectedConditions.visibilityOfElementLocated(By.name(name)));
+		}catch(UnreachableBrowserException e){
+			
+		}
 	}
 	public void xpath(String xpath){
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpath)));
+		try{
+			wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpath)));
+		}catch(UnreachableBrowserException e){
+			
+		}
 	}
 	public void cssSelector(String cssSelector){
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(cssSelector)));
+		try{
+			wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(cssSelector)));
+		}catch(UnreachableBrowserException e){
+			
+		}
 	}
 	public void linkText(String linkText){
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText(linkText)));
+		try{
+			wait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText(linkText)));
+		}catch(UnreachableBrowserException e){
+			
+		}
 	}	
 	
 }

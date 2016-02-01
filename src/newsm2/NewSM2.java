@@ -20,19 +20,19 @@ public class NewSM2 {
 		caeConfig.showSetting();
 		
 		new CreditApplication(ctrl, caeConfig).run();		
-//		interrupt.waitKey();
+		interrupt.waitKey();
 
 		new CMSValuations(ctrl, caeConfig).run();			
-//		interrupt.waitKey();
+		interrupt.waitKey();
 		
 		new CreditAnalysis(ctrl, caeConfig).run();			
-//		interrupt.waitKey();
+		interrupt.waitKey();
 		
-		new CreditApproval(ctrl, caeConfig).run();			
+//		new CreditApproval(ctrl, caeConfig).run();			
 //		interrupt.waitKey();
 
-		new Contract(ctrl, caeConfig).run();				
-		interrupt.waitKey();
+//		new Contract(ctrl, caeConfig).run();				
+//		interrupt.waitKey();
 		
 //		new LimitSet(ctrl, caeConfig).run();				
 //		interrupt.waitKey();

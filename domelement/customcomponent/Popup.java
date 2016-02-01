@@ -3,6 +3,7 @@ package customcomponent;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.remote.UnreachableBrowserException;
 
 import controller.EngineController;
 import log.LogCat;
@@ -18,8 +19,6 @@ public class Popup {
 		driver = comDriver.wde.getDriver();
 		this.logCat = logCat;
 	}
-	
-	int freeTime = 1000;
 	
 	public WebDriver RunPopup(DataElementObj obj) {
 //		System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXX RunPopup");
@@ -50,13 +49,13 @@ public class Popup {
 		do {
 			driver.getWindowHandles();
 			try {
-				Thread.sleep(200);
+				Thread.sleep(100);
 			} catch (InterruptedException e) {
 				logCat.sendToLog("[POPUP]\t" + "Wait for popup " + " Thread Error");	
 				e.printStackTrace();			
 			}
 			timeCount++;
-			if (timeCount > 100) {
+			if (timeCount > 300) {
 				// break;
 				return null;
 			}
@@ -65,7 +64,7 @@ public class Popup {
 		timeCount = 1;
 		do {
 			try {
-				Thread.sleep(200);
+				Thread.sleep(100);
 				//SELECT POPUP
 				for (String winHandle : driver.getWindowHandles()) {
 					WebDriver popup = null;
@@ -76,15 +75,20 @@ public class Popup {
 							return popup;
 						}
 					} catch (NoSuchElementException e) {
-						// logCat.sendToLog("GET POPUP CRASH !!!");
+						logCat.sendToLog("GET POPUP CRASH !!! -NoSuchElementException");
+					} catch (UnreachableBrowserException e) {
+						logCat.sendToLog("GET POPUP CRASH !!! -UnreachableBrowserException");
 					}
 				}
 			} catch (InterruptedException e) {
-				logCat.sendToLog("[POPUP]\t" + "Wait for popup " + " Thread Error");	
+				logCat.sendToLog("[POPUP]\t" + "Wait for popup " + " Thread Error -InterruptedException");	
+				e.printStackTrace();			
+			} catch (UnreachableBrowserException e) {
+				logCat.sendToLog("[POPUP]\t" + "Wait for popup " + " Thread Error -UnreachableBrowserException");	
 				e.printStackTrace();			
 			}
 			timeCount++;
-			if (timeCount > 100) {
+			if (timeCount > 300) {
 				// break;
 				logCat.sendToLog("[POPUP]\t" + "Verify Element CRASH !!!");
 				return null;
@@ -99,13 +103,13 @@ public class Popup {
 		do {
 			driver.getWindowHandles();
 			try {
-				Thread.sleep(200);
+				Thread.sleep(100);
 			} catch (InterruptedException e) {
 				logCat.sendToLog("[POPUP]\t" + "Wait for popup " + " Thread Error");	
 				e.printStackTrace();			
 			}
 			timeCount++;
-			if (timeCount > 100) {
+			if (timeCount > 300) {
 				// break;
 				return null;
 			}
@@ -114,7 +118,7 @@ public class Popup {
 		timeCount = 1;
 		do {
 			try {
-				Thread.sleep(200);
+				Thread.sleep(100);
 				//SELECT POPUP
 				for (String winHandle : driver.getWindowHandles()) {
 					WebDriver popup = null;
@@ -124,16 +128,21 @@ public class Popup {
 							logCat.sendToLog("[SELECT]\t" + driver.getCurrentUrl());
 							return popup;
 						}
-					} catch (NoSuchElementException e) {
-						// logCat.sendToLog("GET POPUP CRASH !!!");
+					}catch (NoSuchElementException e) {
+						logCat.sendToLog("GET POPUP CRASH !!! -NoSuchElementException");
+					} catch (UnreachableBrowserException e) {
+						logCat.sendToLog("GET POPUP CRASH !!! -UnreachableBrowserException");
 					}
 				}
 			} catch (InterruptedException e) {
-				logCat.sendToLog("[POPUP]\t" + "Wait for popup " + " Thread Error");	
+				logCat.sendToLog("[POPUP]\t" + "Wait for popup " + " Thread Error -InterruptedException");	
+				e.printStackTrace();			
+			} catch (UnreachableBrowserException e) {
+				logCat.sendToLog("[POPUP]\t" + "Wait for popup " + " Thread Error -UnreachableBrowserException");	
 				e.printStackTrace();			
 			}
 			timeCount++;
-			if (timeCount > 100) {
+			if (timeCount > 300) {
 				// break;
 				logCat.sendToLog("[POPUP]\t" + "Verify Element CRASH !!!");
 				return null;
@@ -149,13 +158,13 @@ public class Popup {
 		do {
 			driver.getWindowHandles();
 			try {
-				Thread.sleep(200);
+				Thread.sleep(100);
 			} catch (InterruptedException e) {
 				logCat.sendToLog("[POPUP]\t" + "Wait for popup " + " Thread Error");	
 				e.printStackTrace();			
 			}
 			timeCount++;
-			if (timeCount > 100) {
+			if (timeCount > 300) {
 				// break;
 				return null;
 			}
@@ -164,7 +173,7 @@ public class Popup {
 		timeCount = 1;
 		do {
 			try {
-				Thread.sleep(200);
+				Thread.sleep(100);
 				//SELECT POPUP
 				for (String winHandle : driver.getWindowHandles()) {
 					WebDriver popup = null;
@@ -175,15 +184,20 @@ public class Popup {
 							return popup;
 						}
 					} catch (NoSuchElementException e) {
-						// logCat.sendToLog("GET POPUP CRASH !!!");
+						logCat.sendToLog("GET POPUP CRASH !!! -NoSuchElementException");
+					} catch (UnreachableBrowserException e) {
+						logCat.sendToLog("GET POPUP CRASH !!! -UnreachableBrowserException");
 					}
 				}
 			} catch (InterruptedException e) {
-				logCat.sendToLog("[POPUP]\t" + "Wait for popup " + " Thread Error");	
+				logCat.sendToLog("[POPUP]\t" + "Wait for popup " + " Thread Error -InterruptedException");	
+				e.printStackTrace();			
+			} catch (UnreachableBrowserException e) {
+				logCat.sendToLog("[POPUP]\t" + "Wait for popup " + " Thread Error -UnreachableBrowserException");	
 				e.printStackTrace();			
 			}
 			timeCount++;
-			if (timeCount > 100) {
+			if (timeCount > 300) {
 				// break;
 				logCat.sendToLog("[POPUP]\t" + "Verify Element CRASH !!!");
 				return null;
@@ -198,13 +212,13 @@ public class Popup {
 		do {
 			driver.getWindowHandles();
 			try {
-				Thread.sleep(200);
+				Thread.sleep(100);
 			} catch (InterruptedException e) {
 				logCat.sendToLog("[POPUP]\t" + "Wait for popup " + " Thread Error");	
 				e.printStackTrace();			
 			}
 			timeCount++;
-			if (timeCount > 100) {
+			if (timeCount > 300) {
 				// break;
 				return null;
 			}
@@ -213,7 +227,7 @@ public class Popup {
 		timeCount = 1;
 		do {
 			try {
-				Thread.sleep(200);
+				Thread.sleep(100);
 				//SELECT POPUP
 				for (String winHandle : driver.getWindowHandles()) {
 					WebDriver popup = null;
@@ -224,15 +238,20 @@ public class Popup {
 							return popup;
 						}
 					} catch (NoSuchElementException e) {
-						// logCat.sendToLog("GET POPUP CRASH !!!");
+						logCat.sendToLog("GET POPUP CRASH !!! -NoSuchElementException");
+					} catch (UnreachableBrowserException e) {
+						logCat.sendToLog("GET POPUP CRASH !!! -UnreachableBrowserException");
 					}
 				}
 			} catch (InterruptedException e) {
-				logCat.sendToLog("[POPUP]\t" + "Wait for popup " + " Thread Error");	
+				logCat.sendToLog("[POPUP]\t" + "Wait for popup " + " Thread Error -InterruptedException");	
+				e.printStackTrace();			
+			} catch (UnreachableBrowserException e) {
+				logCat.sendToLog("[POPUP]\t" + "Wait for popup " + " Thread Error -UnreachableBrowserException");	
 				e.printStackTrace();			
 			}
 			timeCount++;
-			if (timeCount > 100) {
+			if (timeCount > 300) {
 				// break;
 				logCat.sendToLog("[POPUP]\t" + "Verify Element CRASH !!!");
 				return null;

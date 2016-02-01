@@ -43,7 +43,7 @@ public class WebDriverEngine {
 	}
 	
 	public void setDriverWait(){
-		driverWait = new WebDriverWait(driver, 30);
+		driverWait = new WebDriverWait(driver, 10);
 	}	
 	
 	public void setExecutor(){

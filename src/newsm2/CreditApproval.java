@@ -22,8 +22,15 @@ public class CreditApproval extends BaseApplication {
 //		caeConfig.CM = "ApichonP ";
 		
 		switch (caeConfig.CreditPath) {
+		
+		case autoBCOM:
+			ctrl.logCat.sendToLog("AUTO BCOM");
 		case BCOM:
+			ctrl.logCat.sendToLog("BCOM");
 			break;
+
+		case autoKSCCOM:
+			ctrl.logCat.sendToLog("AUTO KSCCOM");
 		case KSCCOM:
 			ctrl.logCat.sendToLog("KSCCOM");
 			caeConfig.runableFlag = verifyState("KSCCOM", "พิจารณาอนุมัติสินเชื่อ(บันทึกมติ)");
@@ -34,6 +41,9 @@ public class CreditApproval extends BaseApplication {
 				KSCCOMConditionVerify();
 			}
 			break;
+
+		case autoRCOM:
+			ctrl.logCat.sendToLog("AUTO RCOM");
 		case RCOM:
 			ctrl.logCat.sendToLog("RCOM");
 			caeConfig.runableFlag = verifyState("NEWSM2CMDept", "เลือกคณะกรรมการ");
@@ -46,6 +56,7 @@ public class CreditApproval extends BaseApplication {
 				RCOMPrintCommitment();
 			}
 			break;
+		
 		}
 		CustomerNotification();
 		if(caeConfig.CreditCommitment.equals(Commitment.NOTPASS) || caeConfig.CreditCommitment.equals(Commitment.REQ_NOTPASS)){

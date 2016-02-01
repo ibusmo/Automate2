@@ -13,6 +13,7 @@ import log.LogCat;
 import customcomponent.JSExecute;
 import customcomponent.Popup;
 import customcomponent.Radio;
+import customcomponent.ScreenCapture;
 import customcomponent.Type;
 import testdata.TestConfig;
 import variable.PathVariable;
@@ -38,6 +39,8 @@ public class Controller {
 	public Radio radio;
 	public Popup popup;
 	public Type type;
+	
+	public ScreenCapture screenCapture;
 
 	public Controller(PathVariable pathVariable){
 		this.pathVariable 	= pathVariable;
@@ -59,8 +62,8 @@ public class Controller {
 	
 	public Controller(String LORBaseURL, String CMSBaseURL, String pathOffset, String pathSpecify){
 		pathVariable = new PathVariable();
-		pathVariable.setExcelPath(pathOffset + pathSpecify + ".xlsx");
-		pathVariable.setLogPath(pathOffset + pathSpecify + ".log");
+		pathVariable.setExcelName(pathOffset + pathSpecify + ".xlsx");
+		pathVariable.setLogName(pathOffset + pathSpecify + ".log");
 		pathVariable.setLORBaseURL("http://172.31.1.41:55011/LOR/");
 		pathVariable.setCMSBaseURL("http://172.31.1.42:9080/CMS/");
 		
@@ -71,7 +74,7 @@ public class Controller {
 	}
 	
 	private void initIO() {
-		logCat = new LogCat(pathVariable.getLogPath());
+		logCat = new LogCat(pathVariable.getRelativeLogPath());
 	}
 	
 	public void initDriver(){
@@ -97,10 +100,12 @@ public class Controller {
 		popup		= new Popup(commonDriver, logCat);
 		type 		= new Type(commonDriver);
 		dropdown 	= new Dropdown(commonDriver, type, button);
+		
+		screenCapture = new ScreenCapture(driver);
 	}
 	
 	public void initTestConfig(){
-		testConfig	= new TestConfig(pathVariable.getExcelPath(), logCat);
+		testConfig	= new TestConfig(pathVariable.getRelativeExcelPath(), logCat);
 	}
 	
 	public void disconnect(){

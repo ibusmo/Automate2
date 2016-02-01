@@ -29,11 +29,6 @@ import testdata.DataElementObj;
 
 public abstract class KeywordsCOM{
 
-//	protected EngineController commonDriver;
-	
-//	protected WebDriver driver;
-//	protected WebDriverWait wait;
-//	protected JavascriptExecutor executor;
 	protected Controller ctrl;
 	protected LogCat logCat;
 	
@@ -57,7 +52,7 @@ public abstract class KeywordsCOM{
 	
 	protected boolean initKeywords(){
 		this.logCat = ctrl.logCat;
-		this.workBookPath = ctrl.pathVariable.getExcelPath();
+		this.workBookPath = ctrl.pathVariable.getRelativeExcelPath();
 		return true;
 	}
 	
@@ -82,58 +77,103 @@ public abstract class KeywordsCOM{
 		if(loadData()==false) 						return false;
 		
 		sendToLogStart();
-		if(preExecute()==false) 					return false;
+		if(preExecute()==false) 					{	takeCapture();	return false;	}
 		
 		for(DataElementObj obj : dataElementObjList){
 			preCondition(obj);
 			if(obj.run==false) continue;
-			switch(obj.type){
-				case openbrowser:
-					if(caseOpenBrowser(obj)==false) return false;
-					break;
-				case button:
-					if(caseButton(obj)==false) 		return false;
-					break;
-				case dropdownx:
-				case dropdown:
-					if(caseDropdown(obj)==false)	return false;
-					break;
-				case text:
-					if(caseText(obj)==false) 		return false;
-					break;
-				case radio:
-					if(caseRadio(obj)==false)		return false;
-					break;
-				case checkbox:
-					if(caseCheckbox(obj)==false) 	return false;
-					break;
-				case date:
-					if(caseDate(obj)==false) 		return false;
-					break;
-				case popup:
-					if(casePopup(obj)==false) 		return false;
-					break;
-				case alert:
-					if(caseAlert(obj)==false) 		return false;
-					break;
-					
-				case save:
-				case savedraft:
-					if(caseSave(obj)==false) 		return false;
-					break;
-				case verify:
-					if(caseVerify(obj)==false) 		return false;
-					break;
-					
-				case jsexe:
-					if(caseJsExe(obj)==false) 		return false;
-					break;
+			
+			String objDebug = obj.name + "\t#" + obj.data + "\t#" + obj.type + "\t#" + obj.fieldType + "\t#" + obj.fieldName + "\t#" + obj.fieldValue;
+			
+			try{
+				switch(obj.type){
+					case openbrowser:
+						if(caseOpenBrowser(obj)==false) return false;
+						break;
+					case button:
+						if(caseButton(obj)==false) 		return false;
+						break;
+					case dropdownx:
+					case dropdown:
+						if(caseDropdown(obj)==false)	return false;
+						break;
+					case text:
+						if(caseText(obj)==false) 		return false;
+						break;
+					case radio:
+						if(caseRadio(obj)==false)		return false;
+						break;
+					case checkbox:
+						if(caseCheckbox(obj)==false) 	return false;
+						break;
+					case date:
+						if(caseDate(obj)==false) 		return false;
+						break;
+					case popup:
+						if(casePopup(obj)==false) 		return false;
+						break;
+					case alert:
+						if(caseAlert(obj)==false) 		return false;
+						break;
+						
+					case save:
+					case savedraft:
+						if(caseSave(obj)==false) 		return false;
+						break;
+					case verify:
+						if(caseVerify(obj)==false) 		return false;
+						break;
+						
+					case jsexe:
+						if(caseJsExe(obj)==false) 		return false;
+						break;				
+				}
 				
+				sendToLogCustom(logexestatus.PASS, logaction.None, objDebug);
+				
+			}catch(NoSuchElementException e){
+				sendToLogCustom(logexestatus.FAIL, logaction.None, objDebug + " -NoSuchElementException");
+				takeCapture();
+				return false;
+			}catch(UnreachableBrowserException e){
+				sendToLogCustom(logexestatus.FAIL, logaction.None, objDebug + " -UnreachableBrowserException");
+				takeCapture();
+				return false;
+			}catch(InvalidElementStateException e){
+				sendToLogCustom(logexestatus.FAIL, logaction.None, objDebug + " -InvalidElementStateException");
+				takeCapture();
+				return false;
+			}catch(NoAlertPresentException e){
+				sendToLogCustom(logexestatus.FAIL, logaction.None, objDebug + " -NoAlertPresentException");
+				takeCapture();
+//				return false;
+			}catch(TimeoutException e){
+				sendToLogCustom(logexestatus.FAIL, logaction.None, objDebug + " -TimeoutException");
+				takeCapture();
+				return false;
+			}catch(UnhandledAlertException e){
+				sendToLogCustom(logexestatus.FAIL, logaction.None, objDebug + " -UnhandledAlertException");
+				takeCapture();
+//				return false;
+			}catch(WebDriverException e){
+				sendToLogCustom(logexestatus.FAIL, logaction.None, objDebug + " -WebDriverException");
+				takeCapture();
+				return false;
+			}catch(NullPointerException e){
+				sendToLogCustom(logexestatus.FAIL, logaction.None, objDebug + " -NullPointerException");
+				takeCapture();
+				return false;
+			}catch(Exception e){
+				sendToLogCustom(logexestatus.FAIL, logaction.None, objDebug + " -Exception");	
+				takeCapture();			
 			}
 			posCondition(obj);
 		}
 
-		if(posExecute()==false) return false;
+		if(posExecute()==false){
+			takeCapture();
+			return false;
+		}
 		sendToLogFinish();
 		return true;
 	}
@@ -145,43 +185,16 @@ public abstract class KeywordsCOM{
 	}
 	
 	private boolean caseJsExe(DataElementObj obj) {
-		try{
-			ctrl.jsExecute.runExe(obj);
-			sendToLogCustom(logexestatus.PASS, logaction.JSExe, obj.name + ": '" + obj.fieldName + " '");
-		}catch (TimeoutException e){
-			sendToLogCustom(logexestatus.FAIL, logaction.JSExe, obj.name + ": '" + obj.fieldName + " ' -TimeoutException");
-			return false;
-		}catch (InvalidElementStateException e){
-			sendToLogCustom(logexestatus.FAIL, logaction.JSExe, obj.name + ": '" + obj.fieldName + " ' -InvalidElementStateException");
-			return false;			
-		}catch (UnhandledAlertException e){
-			sendToLogCustom(logexestatus.FAIL, logaction.JSExe, obj.name + ": '" + obj.fieldName + " ' -UnhandledAlertException");
-			return false;			
-		}catch(NoSuchElementException e){
-			sendToLogCustom(logexestatus.FAIL, logaction.JSExe, obj.name + ": '" + obj.fieldName + " ' -NoSuchElementException");
-			return false;		
-		}
+		ctrl.jsExecute.runExe(obj);
+		sendToLogCustom(logexestatus.PASS, logaction.JSExe, obj.name + ": '" + obj.fieldName + " '");
 		return true;
 	}
 	private boolean caseSave(DataElementObj obj) {
-		try{
 			ctrl.button.save(obj);
-			sendToLogCustom(logexestatus.PASS, logaction.Save, obj.name + ": " + obj.data);
-		}catch (TimeoutException e){
-			sendToLogCustom(logexestatus.PASS, logaction.Save, obj.name + ": " + obj.data + "-TimeoutException");	
-			return false;		
-		}catch (InvalidElementStateException e){
-			sendToLogCustom(logexestatus.PASS, logaction.Save, obj.name + ": " + obj.data + "-InvalidElementStateException");	
-			return false;				
-		}catch(WebDriverException e){
-			sendToLogCustom(logexestatus.PASS, logaction.Save, obj.name + ": " + obj.data + "-WebDriverException");	
-			return false;	
-		}
 		return true;
 	}
 	
 	private boolean caseVerify(DataElementObj obj) {
-		try{
 			if(ctrl.verifyData.runVerify(obj)){
 				sendToLogCustom(logexestatus.PASS, logaction.Verify, obj.name + ": " + obj.data 
 						+ " - " + obj.fieldType + ": '" + obj.fieldName + "'|'" + obj.fieldValue + "'");
@@ -189,141 +202,50 @@ public abstract class KeywordsCOM{
 			else{
 				sendToLogCustom(logexestatus.FAIL, logaction.Verify, obj.name + ": " + obj.data  
 						+ " - " + obj.fieldType + ": '" + obj.fieldName + "'|'" + obj.fieldValue + "'");
+				takeCapture();
 				return false;
 			}
-		}catch (TimeoutException e){
-			sendToLogCustom(logexestatus.FAIL, logaction.Verify, obj.name + ": " + obj.data + " -TimeoutException");
-			return false;
-		}catch (InvalidElementStateException e){
-			sendToLogCustom(logexestatus.FAIL, logaction.Verify, obj.name + ": " + obj.data + " -InvalidElementStateException");
-			return false;			
-		}catch (UnhandledAlertException e){
-			sendToLogCustom(logexestatus.FAIL, logaction.Verify, obj.name + ": " + obj.data + " -UnhandledAlertException");
-			return false;			
-		}
 		return true;
 	}
 	protected boolean caseAlert(DataElementObj obj) {
-		try{
-			ctrl.alertHandle.RunAlert(obj);
-//			new AlertHandle(commonDriver).RunAlert(obj);
-			sendToLogCustom(logexestatus.PASS, logaction.Comfirm, obj.name + ": " + obj.data);
-		}catch (TimeoutException e){
-			sendToLogCustom(logexestatus.FAIL, logaction.Comfirm, obj.name + ": " + obj.data);
-			//return false;
-		}catch(NoAlertPresentException e){
-			sendToLogCustom(logexestatus.FAIL, logaction.Comfirm, obj.name + ": " + obj.data);
-			//return false;
-		}catch (InvalidElementStateException e){
-			sendToLogCustom(logexestatus.FAIL, logaction.Comfirm, obj.name + ": " + obj.data + " " + e.getMessage());
-			return false;			
-		}catch (UnhandledAlertException e){
-			sendToLogCustom(logexestatus.FAIL, logaction.Comfirm, obj.name + ": " + obj.data + " " + e.getMessage());
-			return false;			
-		}
+			alert();
 		return true;
 	}
 
 	protected boolean casePopup(DataElementObj obj) {
-		try{
 			WebDriver popup = ctrl.popup.RunPopup(obj);
-	//		WebDriver popup = new Popup(commonDriver, logCat).RunPopup(obj);
 			if (popup != null) {
 				sendToLogCustom(logexestatus.PASS, logaction.Popup, obj.name + ": " + obj.data);
 			} else {
 				sendToLogCustom(logexestatus.FAIL, logaction.Popup, obj.name + ": " + obj.data);
+				takeCapture();
 				return false;
 			}
-		}catch (UnhandledAlertException e){
-			sendToLogCustom(logexestatus.FAIL, logaction.Popup, obj.name + ": " + obj.data  + " ' -UnhandledAlertException");
-			return false;	
-		}
 		return true;
 	}
 
 	protected boolean caseDate(DataElementObj obj) {
-		try{
 			ctrl.datePicker.runDatePicker(obj);
-//			new DatePicker(commonDriver).runDatePicker(obj);
-			sendToLogCustom(logexestatus.PASS, logaction.Date, obj.name + ": " + obj.data);
-		}catch (TimeoutException e){
-			sendToLogCustom(logexestatus.FAIL, logaction.Date, obj.name + ": " + obj.data);
-			return false;
-		}catch (InvalidElementStateException e){
-			sendToLogCustom(logexestatus.FAIL, logaction.Date, obj.name + ": " + obj.data + " " + e.getMessage());
-			return false;			
-		}
 		return true;
 	}
 
 	protected boolean caseCheckbox(DataElementObj obj) {
-		try{
 			ctrl.checkBox.RunCheckBox(obj);
-//			new CheckBox(commonDriver).RunCheckBox(obj);
-			sendToLogCustom(logexestatus.PASS, logaction.Checkbox, obj.name + ": " + obj.data);
-		}catch (TimeoutException e){
-			sendToLogCustom(logexestatus.FAIL, logaction.Checkbox, obj.name + ": " + obj.data + " -TimeoutException");
-			return false;
-		}catch (InvalidElementStateException e){
-			sendToLogCustom(logexestatus.FAIL, logaction.Checkbox, obj.name + ": " + obj.data + " -InvalidElementStateException");
-			return false;			
-		}
 		return true;
 	}
 
 	protected boolean caseRadio(DataElementObj obj) {
-		try{
 			ctrl.radio.RunRadio(obj);
-//			new Radio(commonDriver).RunRadio(obj);
-			sendToLogCustom(logexestatus.PASS, logaction.Radio, obj.name + ": " + obj.data);
-		}catch (TimeoutException e){
-			sendToLogCustom(logexestatus.FAIL, logaction.Radio, obj.name + ": " + obj.data + " -TimeoutException");
-			return false;
-		}catch (InvalidElementStateException e){
-			sendToLogCustom(logexestatus.FAIL, logaction.Radio, obj.name + ": " + obj.data + " -InvalidElementStateException");
-			return false;			
-		}catch(ArrayIndexOutOfBoundsException e){
-			sendToLogCustom(logexestatus.FAIL, logaction.Radio, obj.name + ": " + obj.data + " -ArrayIndexOutOfBoundsException");
-			return false;		
-		}catch(IndexOutOfBoundsException e){
-			sendToLogCustom(logexestatus.FAIL, logaction.Radio, obj.name + ": " + obj.data + " -IndexOutOfBoundsException");
-			return false;		
-		}
 		return true;
 	}
-	
-//	Default case
-//	protected boolean caseText(DataElementObj obj) {
-//		try{
-//			new Type().RunText(obj);
-//			sendToLogCustom(logexestatus.PASS, logaction.Text, obj.name + ": " + obj.data);
-//		}catch (TimeoutException e){
-//			sendToLogCustom(logexestatus.FAIL, logaction.Text, obj.name + ": " + obj.data);
-//			return false;
-//		}
-//		return true;
-//	}
 	
 	protected boolean caseText(DataElementObj obj) {
 		//@Override Method for GENERATE NUMBER
 		try{
 			obj.data = obj.fieldValue!="" && obj.fieldValue!="null" ? getNum((int)Math.round(Double.parseDouble(obj.fieldValue))) : obj.data;
 			ctrl.type.RunText(obj);
-//			new Type(commonDriver).RunText(obj);
-			sendToLogCustom(logexestatus.PASS, logaction.Text, obj.name + ": " + obj.data);
 		}catch(NumberFormatException e){
 			ctrl.type.RunText(obj);
-//			new Type(commonDriver).RunText(obj);
-			sendToLogCustom(logexestatus.PASS, logaction.Text, obj.name + ": " + obj.data);
-		}catch (TimeoutException e){
-			sendToLogCustom(logexestatus.FAIL, logaction.Text, obj.name + ": " + obj.data + " -TimeoutException");
-			return false;
-		}catch (InvalidElementStateException e){
-			sendToLogCustom(logexestatus.FAIL, logaction.Text, obj.name + ": " + obj.data + " -InvalidElementStateException");
-			return false;			
-		}catch (UnreachableBrowserException e){
-			sendToLogCustom(logexestatus.FAIL, logaction.Text, obj.name + ": " + obj.data + " -UnreachableBrowserException");
-			return false;			
 		}
 		return true;
 	}
@@ -337,56 +259,23 @@ public abstract class KeywordsCOM{
 	}
 	
 	protected boolean caseDropdown(DataElementObj obj) {
-		try{
-				ctrl.dropdown.RunDropdown(obj, false);
-//				new Dropdown(commonDriver).RunDropdown(obj, false);
-				sendToLogCustom(logexestatus.PASS, logaction.Dropdown, obj.name + ": " + obj.data + ": " + obj.fieldValue);
-		}catch (TimeoutException e){
-			sendToLogCustom(logexestatus.FAIL, logaction.Dropdown, obj.name + ": " + obj.data + ": " + obj.fieldValue + " -TimeoutException");
-			return false;
-		}catch (InvalidElementStateException e){
-			sendToLogCustom(logexestatus.FAIL, logaction.Dropdown, obj.name + ": " + obj.data + ": " + obj.fieldValue + " -InvalidElementStateException");
-			return false;			
-		}catch(NoSuchElementException e){
-			sendToLogCustom(logexestatus.FAIL, logaction.Dropdown, obj.name + ": " + obj.data + ": " + obj.fieldValue + " -NoSuchElementException");
-			return false;				
-		}catch(NullPointerException e){
-			sendToLogCustom(logexestatus.FAIL, logaction.Dropdown, obj.name + ": " + obj.data + ": " + obj.fieldValue + " -NullPointerException");
-			return false;				
-		}catch(UnreachableBrowserException e){
-			sendToLogCustom(logexestatus.FAIL, logaction.Dropdown, obj.name + ": " + obj.data + ": " + obj.fieldValue + " -UnreachableBrowserException");
-			return false;			
-		}catch(UnhandledAlertException e){
-			sendToLogCustom(logexestatus.FAIL, logaction.Dropdown, obj.name + ": " + obj.data + ": " + obj.fieldValue + " -UnhandledAlertException");
-			return false;					
-		}
+			ctrl.dropdown.RunDropdown(obj, false);
 		return true;
 	}
 
 	protected boolean caseButton(DataElementObj obj) {
 		try{
 			ctrl.button.RunButton(obj);
-//			new Button(commonDriver).RunButton(obj);
-			sendToLogCustom(logexestatus.PASS, logaction.Click, obj.name + ": " + obj.data);
 		}catch (TimeoutException e){
-			sendToLogCustom(logexestatus.FAIL, logaction.Click, obj.name + ": " + obj.data);
 			if(obj.fieldType == fieldType.linktext)	{
 				//Nothing TO DO
 			}
 			else if(obj.data.toLowerCase().contains("DRAFT")){
 				//Nothing TO DO
 			}else{
+				takeCapture();
 				return false;
 			}
-		}catch (InvalidElementStateException e){
-			sendToLogCustom(logexestatus.FAIL, logaction.Click, obj.name + ": " + obj.data + " -InvalidElementStateException");
-			return false;			
-		}catch (NullPointerException e){
-			sendToLogCustom(logexestatus.FAIL, logaction.Click, obj.name + ": " + obj.data + " -NullPointerException");
-			return false;			
-		}catch(UnreachableBrowserException e){
-			sendToLogCustom(logexestatus.FAIL, logaction.Click, obj.name + ": " + obj.data + " -UnreachableBrowserException");
-			return false;			
 		}
 		return true;
 	}	
@@ -431,5 +320,9 @@ public abstract class KeywordsCOM{
 	protected void sendToLogCustom(logexestatus logexestatus, logaction logaction, String str) {
 		logCat.sendToLog(logexestatus, logoperation, logtab, logsubtab, logelement.None,
 				logaction, str);
+	}
+	
+	protected void takeCapture(){
+		ctrl.screenCapture.saveShotImage(ctrl.pathVariable.getRelativeLog() + ".jpg");
 	}
 }
