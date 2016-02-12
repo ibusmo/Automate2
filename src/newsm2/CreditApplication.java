@@ -10,6 +10,7 @@ import creditapplication.BasicInformation;
 import creditapplication.BasicInformationSendWork;
 import creditapplication.CollateralAccount;
 import creditapplication.CollateralBuilding;
+import creditapplication.CollateralCheckOrNot;
 import creditapplication.CollateralLand;
 import creditapplication.CollateralLandAndBuilding;
 import creditapplication.CollateralLottery;
@@ -55,6 +56,7 @@ public class CreditApplication extends BaseApplication {
 		caeConfig.appID = getAppID();
 
 		NCBOptionCheckOrNot();
+		CollateralCheckOrNot();
 		addCustomer();
 		addLoan();
 		addCollateral();
@@ -86,6 +88,19 @@ public class CreditApplication extends BaseApplication {
 		if (!caeConfig.runableFlag)
 			return false;
 		return caeConfig.runableFlag = new NCBOptionCheckOrNot(ctrl, caeConfig.NCB).execute();
+	}
+	
+	private boolean CollateralCheckOrNot() {
+		if(caeConfig.CMSLandBuilding + caeConfig.CMSBuilding 
+				+ caeConfig.CMSLand + caeConfig.CMSAccounting 
+				+ caeConfig.CMSLottery + caeConfig.CMSNormalWar 
+				+ caeConfig.CMSLegalWar 
+				> 0){
+			caeConfig.CollateralCheck = true;
+		}
+		if (!caeConfig.runableFlag)
+			return false;
+		return caeConfig.runableFlag = new CollateralCheckOrNot(ctrl, caeConfig.CollateralCheck).execute();
 	}
 	
 	private boolean addCustomer() {

@@ -27,6 +27,7 @@ public class CellTag {
 		name, 
 		xpath, 
 		linktext,
+		value,
 		
 		urlMatches,
 		urlContains,
@@ -117,7 +118,7 @@ public class CellTag {
 		
 		KSCCOM,
 		RCOM,
-		BCOM, RCOMAdmin, BCOMAdmin, CMSec, CMGR, CACO, MMGR, AOM, LongTermLoan, PromissoryNote, BookGarantee, OD, CMSLottery, Commitment
+		BCOM, RCOMAdmin, BCOMAdmin, CMSec, CMGR, CACO, MMGR, AOM, LongTermLoan, PromissoryNote, BookGarantee, OD, CMSLottery, Commitment, System
 	}
 	
 	public enum CATask{
@@ -127,8 +128,12 @@ public class CellTag {
 	public enum CreditTask{
 		KSCCOM, RCOM, BCOM, autoKSCCOM, autoRCOM, autoBCOM
 	}
-	
+
 	public enum Commitment{
 		PASS, NOTPASS, REQ_PASS, REQ_NOTPASS
+	}
+	
+	public enum ApprSystem{
+		IN, OUT
 	}
 }

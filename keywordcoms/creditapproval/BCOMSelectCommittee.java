@@ -12,15 +12,15 @@ import log.LogTag.logaction;
 import log.LogTag.logexestatus;
 import testdata.CellTag.ApprSystem;
 
-public class RCOMSelectCommittee extends KeywordsCOM{
+public class BCOMSelectCommittee extends KeywordsCOM{
 
 	private String[] BCOM;
 	private ApprSystem creditSystem;
 	
-	public RCOMSelectCommittee(Controller ctrl, ApprSystem creditSystem, String[] BCOM){
+	public BCOMSelectCommittee(Controller ctrl, ApprSystem creditSystem, String[] BCOM){
 		super.ctrl = ctrl;
 
-		super.logoperation 		= log.LogTag.logoperation.RCOM;
+		super.logoperation 		= log.LogTag.logoperation.BCOM;
 		super.logtab 			= log.LogTag.logtab.SelectCommittee;
 		super.logsubtab 		= log.LogTag.logsubtab.None;	
 
@@ -52,31 +52,38 @@ public class RCOMSelectCommittee extends KeywordsCOM{
 			sendToLogCustom(logexestatus.PASS, logaction.Click, "Send ส่งงานต่อ");
 			alert();
 			
-			ctrl.dropdown.robotSelectName("ouGroupCode", 2);
-			sendToLogCustom(logexestatus.PASS, logaction.Dropdown, ":หน่วยงาน * = 101010115300430 - ธนาคารออมสินสาขาศูนย์ราชการเฉลิมพระเกียรติ แจ้งวัฒ");
-			
-			//Search user and select
-			int userIndex=2;
-			String elementRowTr = "//*[@id='RCOMTable']/tr";						
-			ctrl.waitFor.xpath(elementRowTr);
-			int numberOfRows = ctrl.driver.findElements(By.xpath(elementRowTr)).size()-1;
-			
-			for(int idx=2; idx<=numberOfRows; idx++){
-				String tempUserText = ctrl.verifyData.getTextByXpath("//*[@id='RCOMTable']/tr["+idx+"]/td[2]");
-				String tempUserValue = ctrl.verifyData.getValueByXpath("//*[@id='RCOMTable']/tr["+idx+"]/td[1]/input");
-					System.out.println("'"+tempUserText+"' - '"+tempUserValue);
-				if(isInChecklist(tempUserValue)){
-					userIndex = idx;
+			switch(creditSystem){
+				case IN:
+					ctrl.dropdown.robotSelectName("ouGroupCode", 2);
+					sendToLogCustom(logexestatus.PASS, logaction.Dropdown, ":หน่วยงาน * = 101010115300430 - ธนาคารออมสินสาขาศูนย์ราชการเฉลิมพระเกียรติ แจ้งวัฒ");
 					
-					ctrl.checkBox.xpath("//*[@id='RCOMTable']/tr["+userIndex+"]/td[1]/input");			
-					sendToLogCustom(logexestatus.PASS, logaction.Checkbox, "เลือกคณะกรรมการ :CMDept/SBRO to RCOM " + userIndex + "-" + tempUserText );						
-				}
+					//Search user and select
+					int userIndex=2;
+					String elementRowTr = "//*[@id='BCOMTable']/tr";						
+					ctrl.waitFor.xpath(elementRowTr);
+					int numberOfRows = ctrl.driver.findElements(By.xpath(elementRowTr)).size()-1;
+					
+					for(int idx=2; idx<=numberOfRows; idx++){
+						String tempUserText = ctrl.verifyData.getTextByXpath("//*[@id='BCOMTable']/tr["+idx+"]/td[2]");
+						String tempUserValue = ctrl.verifyData.getValueByXpath("//*[@id='BCOMTable']/tr["+idx+"]/td[1]/input");
+							System.out.println("'"+tempUserText+"' - '"+tempUserValue);
+						if(isInChecklist(tempUserValue)){
+							userIndex = idx;
+							
+							ctrl.checkBox.xpath("//*[@id='BCOMTable']/tr["+userIndex+"]/td[1]/input");			
+							sendToLogCustom(logexestatus.PASS, logaction.Checkbox, "เลือกคณะกรรมการ :CMDept/SBRO to BCOM " + userIndex + "-" + tempUserText );						
+						}
+					}
+					
+					ctrl.button.xpath("//*[@id='assignUser']/table/tbody/tr/td/button[2]");
+					sendToLogCustom(logexestatus.PASS, logaction.Click, "Send ส่งงานต่อ");
+					alert();
+					break;
+					
+				case OUT:
+					
+					break;
 			}
-			
-			ctrl.button.xpath("//*[@id='assignUser']/table/tbody/tr/td/button[2]");
-			sendToLogCustom(logexestatus.PASS, logaction.Click, "Send ส่งงานต่อ");
-			
-			alert();
 
 			if(ctrl.verifyData.urlContains("inboxAction.do")==false){
 				sendToLogCustom(logexestatus.FAIL, logaction.Verify, "Verify Send ส่งงาน");

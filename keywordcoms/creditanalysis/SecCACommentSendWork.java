@@ -37,6 +37,7 @@ public class SecCACommentSendWork extends KeywordsCOM {
 			sendToLogCustom(logexestatus.PASS, logaction.Click, "Tab ส่งงาน");
 
 			alert();
+			alert();
 
 //			ctrl.dropdown.robotByXpath("//*[@id='btnSendDiv']/table[2]/tbody/tr[1]/td/div[2]/input", 2);
 //			sendToLogCustom(logexestatus.PASS, logaction.Dropdown, "send ส่งงานต่อ");

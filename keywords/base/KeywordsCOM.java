@@ -85,7 +85,7 @@ public abstract class KeywordsCOM{
 			
 			String objDebug = obj.name + "\t#" + obj.data + "\t#" + obj.type + "\t#" + obj.fieldType + "\t#" + obj.fieldName + "\t#" + obj.fieldValue;
 			
-			try{
+			 try{
 				switch(obj.type){
 					case openbrowser:
 						if(caseOpenBrowser(obj)==false) return false;
@@ -147,11 +147,13 @@ public abstract class KeywordsCOM{
 				sendToLogCustom(logexestatus.FAIL, logaction.None, objDebug + " -NoAlertPresentException");
 				takeCapture();
 //				return false;
-			}catch(TimeoutException e){
+			}
+			catch(TimeoutException e){
 				sendToLogCustom(logexestatus.FAIL, logaction.None, objDebug + " -TimeoutException");
 				takeCapture();
 				return false;
-			}catch(UnhandledAlertException e){
+			}
+			catch(UnhandledAlertException e){
 				sendToLogCustom(logexestatus.FAIL, logaction.None, objDebug + " -UnhandledAlertException");
 				takeCapture();
 //				return false;
@@ -167,6 +169,7 @@ public abstract class KeywordsCOM{
 				sendToLogCustom(logexestatus.FAIL, logaction.None, objDebug + " -Exception");	
 				takeCapture();			
 			}
+			
 			posCondition(obj);
 		}
 

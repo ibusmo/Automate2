@@ -1,5 +1,5 @@
 
-package creditanalysis;
+package creditapproval;
 
 import org.openqa.selenium.InvalidElementStateException;
 import org.openqa.selenium.NoAlertPresentException;
@@ -11,12 +11,12 @@ import controller.Controller;
 import log.LogTag.logaction;
 import log.LogTag.logexestatus;
 
-public class BranchCASendWork extends KeywordsCOM {
+public class BCOMCommitmentSendWork extends KeywordsCOM {
 	
-	public BranchCASendWork(Controller ctrl) {
+	public BCOMCommitmentSendWork(Controller ctrl) {
 		super.ctrl = ctrl;
 		
-		super.logoperation 		= log.LogTag.logoperation.SendWork;
+		super.logoperation 		= log.LogTag.logoperation.ConditionVerify;
 		super.logtab 			= log.LogTag.logtab.SendWork;
 		super.logsubtab 		= log.LogTag.logsubtab.None;	
 	}
@@ -30,16 +30,15 @@ public class BranchCASendWork extends KeywordsCOM {
 			
 			ctrl.button.linkText("ส่งงาน");
 			sendToLogCustom(logexestatus.PASS, logaction.Click, "Tab ส่งงาน");
-			
+
 			alert();
-			
+
 			ctrl.dropdown.robotByXpath("//*[@id='btnSendDiv']/table[2]/tbody/tr[1]/td/div[2]/input", 2);
 			sendToLogCustom(logexestatus.PASS, logaction.Dropdown, "send ส่งงานต่อ");
 			
 			ctrl.button.xpath("//*[@id='btnSendDiv']/table[3]/tbody/tr/td/button");
 			sendToLogCustom(logexestatus.PASS, logaction.Click, "send ส่งงานต่อ");
 
-			alert();
 			alert();
 			
 			if(ctrl.verifyData.urlContains("inboxAction.do")==false){

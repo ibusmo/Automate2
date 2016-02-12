@@ -39,7 +39,7 @@ public class LogTag {
 		SBROSECAssign, 
 		CMDEPTAssign, 
 		Comment, 
-		GotoApp, VerifyCommitment, VerifyAppState, RCOM, Condition, ConditionVerify, CMGRAssign, MakeContract, ContractVerify, PrepareAccept, SetBudget, DataDrive
+		GotoApp, VerifyCommitment, VerifyAppState, RCOM, Condition, ConditionVerify, CMGRAssign, MakeContract, ContractVerify, PrepareAccept, SetBudget, DataDrive, BCOM
 	}
 	public enum logtab{
 		WorkBox,
@@ -71,7 +71,7 @@ public class LogTag {
 		SearchWorkBOx, 
 		RegLegalCustomer, 
 		LoanFormDDA, 
-		CA, VerifyAppState, SelectCommittee, Committment, CustomerNotify, Condition, ConditionVerify, ContractAdditionalNew, ContractAdditional, ContractLoanReport, ContractCollReport, ContractSignDate, ContractVerify, PrepareAccept, DataDrive 
+		CA, VerifyAppState, SelectCommittee, Committment, CustomerNotify, Condition, ConditionVerify, ContractAdditionalNew, ContractAdditional, ContractLoanReport, ContractCollReport, ContractSignDate, ContractVerify, PrepareAccept, DataDrive, CollCheck 
 	} 
 	public enum logsubtab{
 		WorkBox,

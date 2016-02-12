@@ -1,8 +1,11 @@
 package customcomponent;
 
+import java.util.List;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 
 import controller.EngineController;
 import testdata.DataElementObj;
@@ -43,6 +46,9 @@ public class Button {
 		case linktext:
 			linkText(fieldName);
 			break;
+		case value:
+			value(fieldName);
+			break;
 		default:
 			break;
 		}
@@ -66,6 +72,17 @@ public class Button {
 	public void xpath(String field) {
 		WaitFor.xpath(field);
 		driver.findElement(By.xpath(field)).click();
+	}
+	
+	public void value(String field) {
+		List<WebElement> inputList = driver.findElements(By.tagName("input"));
+		for(int i=0; i<inputList.size(); i++){
+			String str = inputList.get(i).getAttribute("value");
+			if(str.contains(field)){
+				inputList.get(i).click();
+				break;
+			}
+		}
 	}
 
 	public void save(DataElementObj obj) {

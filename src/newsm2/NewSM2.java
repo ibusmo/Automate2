@@ -28,8 +28,11 @@ public class NewSM2 {
 		new CreditAnalysis(ctrl, caeConfig).run();			
 		interrupt.waitKey();
 		
-//		new CreditApproval(ctrl, caeConfig).run();			
-//		interrupt.waitKey();
+//		caeConfig.appID = "038302590033";
+//		caeConfig.SBRO = "SatapornM";
+		
+		new CreditApproval(ctrl, caeConfig).run();			
+		interrupt.waitKey();
 
 //		new Contract(ctrl, caeConfig).run();				
 //		interrupt.waitKey();

@@ -1,6 +1,7 @@
 package newsm2;
 import java.util.List;
 
+import testdata.CellTag.ApprSystem;
 import testdata.CellTag.CATask;
 import testdata.CellTag.Commitment;
 import testdata.CellTag.CreditTask;
@@ -14,6 +15,7 @@ public class COMAutoElementConfig {
 	public String appID = null;
 	public int delayTime = 100;
 	public Boolean NCB = false;
+	public Boolean CollateralCheck = false;
 	public int CutomerNormal = 0;
 	public String[] CutomerNormalList = null;
 	public int CutomerLegal = 0;
@@ -37,6 +39,7 @@ public class COMAutoElementConfig {
 
 	public CATask CAPath = null;
 	public CreditTask CreditPath = null;
+	public ApprSystem CreditSystem = null;
 	public Commitment CreditCommitment = null;
 
 	public String CMS = null;
@@ -219,6 +222,14 @@ public class COMAutoElementConfig {
 				}
 				else if(obj.remark.toLowerCase().contains("bcom")){
 					CreditPath = CreditTask.autoBCOM;
+				}
+				break;
+			case System:
+				if(obj.remark.toLowerCase().matches("in")){
+					CreditSystem = ApprSystem.IN;
+				}
+				else if(obj.remark.toLowerCase().matches("out")){
+					CreditSystem = ApprSystem.OUT;
 				}
 				break;
 			case Commitment:

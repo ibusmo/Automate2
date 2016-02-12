@@ -26,7 +26,7 @@ public class Main {
 		pathVariable.setExcelType(".xls");
 		pathVariable.setLogType(".log");
 		
-		pathVariable.setSpecify("4");
+		pathVariable.setSpecify("new");
 		
 		return pathVariable;
 	}

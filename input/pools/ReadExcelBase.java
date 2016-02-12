@@ -37,6 +37,7 @@ public abstract class ReadExcelBase implements ReadExcelController {
 
 		else if(sheetStr.matches("ca"))					return sheetType.CA;
 		else if(sheetStr.matches("credit"))				return sheetType.Credit;
+		else if(sheetStr.matches("system"))				return sheetType.System;
 		else if(sheetStr.matches("commitment"))			return sheetType.Commitment;
 
 		if(sheetStr.matches("bro"))						return sheetType.BRO;
@@ -112,6 +113,8 @@ public abstract class ReadExcelBase implements ReadExcelController {
 				return fieldType.xpath;
 			case "linktext" :
 				return fieldType.linktext;
+			case "value" :
+				return fieldType.value;
 				
 			case "urlMatches" :
 				return fieldType.urlMatches;

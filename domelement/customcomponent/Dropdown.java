@@ -86,6 +86,11 @@ public class Dropdown{
 	}
 	
 	public void id(String inputField, String inputValue, String selectField, String selectValue, String jsExe) {
+		System.out.println(inputField);
+		System.out.println(inputValue);
+		System.out.println(selectField);
+		System.out.println(selectValue);
+		System.out.println(jsExe);
 		waitFor.xpath(inputField);
 		type.xpath(inputField, inputValue);
 		String jQuery = "$('#"+selectField+"').val('"+selectValue+"');";
@@ -198,6 +203,74 @@ public class Dropdown{
 		}		
 		driver.findElement(By.xpath(selectField)).sendKeys(Keys.ENTER);
 	}
+	
+	public void robotSelectId(String selectField, int selectIndex){
+		
+		String xpathRelative = "//*[@id='"+selectField+"']/../input[1]";
+		
+//		System.out.println(selectField);
+//		System.out.println(xpathRelative);
+		
+		waitFor.xpath(xpathRelative);
+		click.xpath(xpathRelative);
+		driver.findElement(By.xpath(xpathRelative)).clear();
+		selectIndex++;
+		for(int i=0;i<selectIndex;i++){
+			driver.findElement(By.xpath(xpathRelative)).sendKeys(Keys.DOWN);
+		}		
+		driver.findElement(By.xpath(xpathRelative)).sendKeys(Keys.ENTER);
+	}
+	
+	public void robotSelectId(String selectField, int selectIndex, int idx){
+		
+		String xpathRelative = "//*[@id='"+selectField+"']/../input[" + idx + "]";
+		
+//		System.out.println(selectField);
+//		System.out.println(xpathRelative);
+		
+		waitFor.xpath(xpathRelative);
+		click.xpath(xpathRelative);
+		driver.findElement(By.xpath(xpathRelative)).clear();
+		selectIndex++;
+		for(int i=0;i<selectIndex;i++){
+			driver.findElement(By.xpath(xpathRelative)).sendKeys(Keys.DOWN);
+		}		
+		driver.findElement(By.xpath(xpathRelative)).sendKeys(Keys.ENTER);
+	}
+	
+	public void robotSelectName(String selectField, int selectIndex){
+		
+		String xpathRelative = "//*[@name='"+selectField+"']/../input[1]";
+		
+//		System.out.println(selectField);
+//		System.out.println(xpathRelative);
+		
+		waitFor.xpath(xpathRelative);
+		click.xpath(xpathRelative);
+		driver.findElement(By.xpath(xpathRelative)).clear();
+		selectIndex++;
+		for(int i=0;i<selectIndex;i++){
+			driver.findElement(By.xpath(xpathRelative)).sendKeys(Keys.DOWN);
+		}		
+		driver.findElement(By.xpath(xpathRelative)).sendKeys(Keys.ENTER);
+	}
+	
+	public void robotSelectName(String selectField, int selectIndex, int idx){
+		
+		String xpathRelative = "//*[@name='"+selectField+"']/../input[" + idx + "]";
+		
+//		System.out.println(selectField);
+//		System.out.println(xpathRelative);
+		
+		waitFor.xpath(xpathRelative);
+		click.xpath(xpathRelative);
+		driver.findElement(By.xpath(xpathRelative)).clear();
+		selectIndex++;
+		for(int i=0;i<selectIndex;i++){
+			driver.findElement(By.xpath(xpathRelative)).sendKeys(Keys.DOWN);
+		}		
+		driver.findElement(By.xpath(xpathRelative)).sendKeys(Keys.ENTER);
+	}	
 	
 	private void sleep(int time) {
 		try {

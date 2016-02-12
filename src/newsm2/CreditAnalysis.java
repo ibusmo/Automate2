@@ -6,12 +6,14 @@ import creditanalysis.BranchCA;
 import creditanalysis.BranchCAComment;
 import creditanalysis.BranchCACommentSendWork;
 import creditanalysis.BranchCASendWork;
+import creditanalysis.BranchSBROToCMAssign;
 import creditanalysis.SecCA;
 import creditanalysis.SecCAComment;
 import creditanalysis.SecCACommentSendWork;
 import creditanalysis.SecCASendWork;
 import creditanalysis.SecCMDeptToCMAutoAssign;
 import creditanalysis.SecSBROSecToCMDeptAssign;
+import creditanalysis.SecSBROToCMDeptAssign;
 import creditanalysis.SecSBROToSBROSecAssign;
 
 public class CreditAnalysis extends BaseApplication {
@@ -35,7 +37,8 @@ public class CreditAnalysis extends BaseApplication {
 				ctrl.logCat.sendToLog("auto branch");
 			case branch:
 				ctrl.logCat.sendToLog("branch");
-				caeConfig.runableFlag = verifyState("NEWSM2BRO", "วิเคราะห์สินเชื่อ(ในCA)");
+				caeConfig.runableFlag = verifyState("NEWSM2SBRO", "มอบหมายงาน");
+				branchSBROToCM();
 				branchCA();
 				branchCAComment();				
 				break;
@@ -45,8 +48,9 @@ public class CreditAnalysis extends BaseApplication {
 			case section:
 				ctrl.logCat.sendToLog("section");
 				caeConfig.runableFlag = verifyState("NEWSM2SBRO", "เลือกส่งงานต่อ");
-				secSBROToSBROSecAssign();
-				secSBROSecToCMDeptAssign();
+				secSBROToCMDeptAssign();
+				//secSBROToSBROSecAssign();
+				//secSBROSecToCMDeptAssign();
 				secCMDeptToCMAutoAssign();
 				secCA();
 				secCAComment();
@@ -62,6 +66,20 @@ public class CreditAnalysis extends BaseApplication {
 	/*
 	 *												Section Credit Analysis 
 	 */
+	private boolean secSBROToCMDeptAssign() {
+		openBrowser(SystemBase.LOR);
+		login(caeConfig.SBRO, SystemBase.LOR);
+		gotoApp();
+
+		if (!caeConfig.runableFlag)
+			return false;
+		caeConfig.runableFlag = new SecSBROToCMDeptAssign(ctrl, caeConfig.CMDept).execute();
+
+		logout();
+
+		return caeConfig.runableFlag;
+	}
+	
 	private boolean secSBROToSBROSecAssign() {
 		openBrowser(SystemBase.LOR);
 		login(caeConfig.SBRO, SystemBase.LOR);
@@ -145,9 +163,26 @@ public class CreditAnalysis extends BaseApplication {
 	/*
 	 *												Branch Credit Analysis 
 	 */
-	private boolean branchCA() {
+	
+	private boolean branchSBROToCM() {
 		openBrowser(SystemBase.LOR);
-		login(caeConfig.BRO, SystemBase.LOR);
+		login(caeConfig.SBRO, SystemBase.LOR);
+		gotoApp();
+
+		if (!caeConfig.runableFlag)
+			return false;
+		caeConfig.runableFlag = new BranchSBROToCMAssign(ctrl, caeConfig.CM).execute();
+
+		logout();
+
+		return caeConfig.runableFlag;
+	}
+	
+	private boolean branchCA() {
+		if(caeConfig.CM.toLowerCase().matches("rr"))
+			caeConfig.CM = searchForRole();
+		openBrowser(SystemBase.LOR);
+		login(caeConfig.CM, SystemBase.LOR);
 		gotoApp();
 
 		if (!caeConfig.runableFlag)
