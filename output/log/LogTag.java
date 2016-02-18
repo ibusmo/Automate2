@@ -105,7 +105,7 @@ public class LogTag {
 		AddBuilding, 
 		AddAccounting, 
 		AddWarranterLegal, 
-		info, Option, PromissoryNote, OD, NormalCustomer, LegalCustomer, BookGarantee, AddLottery, DataDrive
+		info, Option, PromissoryNote, OD, NormalCustomer, LegalCustomer, BookGarantee, AddLottery, DataDrive, ComCommitment, MoneyNote
 	} 
 	public enum logelement{
 		None
@@ -135,6 +135,6 @@ public class LogTag {
 		OK, 
 		DropdownRobot, 
 		Wait, 
-		Verify, SaveDraft, GotoApp, JSExe, Documents
+		Verify, SaveDraft, GotoApp, JSExe, Documents, Capture
 	}
 }

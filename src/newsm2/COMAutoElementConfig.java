@@ -4,6 +4,7 @@ import java.util.List;
 import testdata.CellTag.ApprSystem;
 import testdata.CellTag.CATask;
 import testdata.CellTag.Commitment;
+import testdata.CellTag.ContractTask;
 import testdata.CellTag.CreditTask;
 import testdata.CellTag.sheetType;
 import testdata.DataAutoElementObj;
@@ -25,6 +26,9 @@ public class COMAutoElementConfig {
 	public int LongTermLoan = 0;
 	public int PromissoryNote = 0;
 	public int BookGarantee = 0;
+	public int ComProNote = 0;
+	public int ComBookGarantee = 0;
+	public int MoneyNote = 0;
 	public int OD = 0;
 
 	public int CMSLandBuilding = 0;
@@ -41,6 +45,7 @@ public class COMAutoElementConfig {
 	public CreditTask CreditPath = null;
 	public ApprSystem CreditSystem = null;
 	public Commitment CreditCommitment = null;
+	public ContractTask ContractPath = null;
 
 	public String CMS = null;
 	
@@ -161,6 +166,15 @@ public class COMAutoElementConfig {
 			case BookGarantee:
 				BookGarantee = obj.index;
 				break;
+			case ComProNote:
+				ComProNote = obj.index;
+				break;
+			case ComBookGarantee:
+				ComBookGarantee = obj.index;
+				break;
+			case MoneyNote:
+				MoneyNote = obj.index;
+				break;
 			case OD:
 				OD = obj.index;
 				break;
@@ -246,6 +260,21 @@ public class COMAutoElementConfig {
 					CreditCommitment = Commitment.REQ_NOTPASS;
 				}
 				break;
+			case Contract:
+				if(obj.remark.toLowerCase().matches("section")){
+					ContractPath = ContractTask.section;
+				}
+				else if(obj.remark.toLowerCase().matches("branch")){
+					ContractPath = ContractTask.branch;
+				}
+				// auto (section) - auto (branch)
+				else if(obj.remark.toLowerCase().contains("section")){
+					ContractPath = ContractTask.autoSection;
+				}
+				else if(obj.remark.toLowerCase().contains("branch")){
+					ContractPath = ContractTask.autoBranch;
+				}
+				break;
 			default:
 				break;
 			}
@@ -272,6 +301,9 @@ public class COMAutoElementConfig {
 		System.out.println("LongTermLoan " + LongTermLoan);
 		System.out.println("PromissoryNote " + PromissoryNote);
 		System.out.println("BookGarantee " + BookGarantee);
+		System.out.println("ComProNote " + ComProNote);
+		System.out.println("ComBookGarantee " + ComBookGarantee);
+		System.out.println("MoneyNote " + MoneyNote);
 		System.out.println("OD " + OD);
 
 		System.out.println("CMSLandBuilding " + CMSLandBuilding);

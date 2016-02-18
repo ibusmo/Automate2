@@ -118,7 +118,7 @@ public class CellTag {
 		
 		KSCCOM,
 		RCOM,
-		BCOM, RCOMAdmin, BCOMAdmin, CMSec, CMGR, CACO, MMGR, AOM, LongTermLoan, PromissoryNote, BookGarantee, OD, CMSLottery, Commitment, System
+		BCOM, RCOMAdmin, BCOMAdmin, CMSec, CMGR, CACO, MMGR, AOM, LongTermLoan, PromissoryNote, BookGarantee, OD, CMSLottery, Commitment, System, Contract, ComProNote, MoneyNote, ComBookGarantee
 	}
 	
 	public enum CATask{
@@ -133,6 +133,9 @@ public class CellTag {
 		PASS, NOTPASS, REQ_PASS, REQ_NOTPASS
 	}
 	
+	public enum ContractTask{
+		section, branch, autoBranch, autoSection
+	}
 	public enum ApprSystem{
 		IN, OUT
 	}

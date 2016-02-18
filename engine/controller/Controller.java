@@ -41,6 +41,7 @@ public class Controller {
 	public Type type;
 	
 	public ScreenCapture screenCapture;
+	public int imgId;
 
 	public Controller(PathVariable pathVariable){
 		this.pathVariable 	= pathVariable;
@@ -102,6 +103,7 @@ public class Controller {
 		dropdown 	= new Dropdown(commonDriver, type, button);
 		
 		screenCapture = new ScreenCapture(driver);
+		imgId = 0;
 	}
 	
 	public void initTestConfig(){

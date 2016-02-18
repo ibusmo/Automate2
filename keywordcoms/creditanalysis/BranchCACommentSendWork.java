@@ -44,7 +44,8 @@ public class BranchCACommentSendWork extends KeywordsCOM {
 			String defaultPath = ctrl.verifyData.getValueByXpath("//*[@id='btnSendDiv']/table[2]/tbody/tr[1]/td/div[2]/input");
 			sendToLogCustom(logexestatus.PASS, logaction.Dropdown, "********************** :defaultPath iLog - " + defaultPath);
 			
-			ctrl.screenCapture.saveShotImage(ctrl.pathVariable.getRelativeLog() + "_BranchApproval_pre" + ".jpg");
+//			ctrl.screenCapture.saveShotImage(ctrl.pathVariable.getRelativeLog() + "_BranchApproval_pre" + ".jpg");
+			capture("BranchApproval_Pre_SelectPath");
 			
 			switch(creditPath){
 				case RCOM:
@@ -75,7 +76,8 @@ public class BranchCACommentSendWork extends KeywordsCOM {
 					break;
 			}
 
-			ctrl.screenCapture.saveShotImage(ctrl.pathVariable.getRelativeLog() + "_BranchApproval_pos" + ".jpg");
+//			ctrl.screenCapture.saveShotImage(ctrl.pathVariable.getRelativeLog() + "_BranchApproval_pos" + ".jpg");
+			capture("BranchApproval_Pos_SelectPath");
 			
 			ctrl.button.xpath("//*[@id='btnSendDiv']/table[3]/tbody/tr/td/button");
 			sendToLogCustom(logexestatus.PASS, logaction.Click, "send ส่งงานต่อ");

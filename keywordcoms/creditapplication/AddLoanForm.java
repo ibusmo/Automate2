@@ -27,6 +27,21 @@ public class AddLoanForm extends KeywordsCOM {
 				super.logsubtab 		= log.LogTag.logsubtab.BookGarantee;
 				super.workSheetPath 	= "loanform_com_bg_" + sheetIndex;
 				break;
+			case ComProNote:
+				super.logtab 			= log.LogTag.logtab.LoanFormCOM;
+				super.logsubtab 		= log.LogTag.logsubtab.ComCommitment;
+				super.workSheetPath 	= "loanform_com_ccpn_" + sheetIndex;
+				break;
+			case ComBookGarantee:
+				super.logtab 			= log.LogTag.logtab.LoanFormCOM;
+				super.logsubtab 		= log.LogTag.logsubtab.ComCommitment;
+				super.workSheetPath 	= "loanform_com_ccbg_" + sheetIndex;
+				break;
+			case MoneyNote:
+				super.logtab 			= log.LogTag.logtab.LoanFormCOM;
+				super.logsubtab 		= log.LogTag.logsubtab.MoneyNote;
+				super.workSheetPath 	= "loanform_com_mn_" + sheetIndex;
+				break;
 			case OD:
 				super.logtab 			= log.LogTag.logtab.LoanFormDDA;
 				super.logsubtab 		= log.LogTag.logsubtab.OD;

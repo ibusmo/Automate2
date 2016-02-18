@@ -41,8 +41,9 @@ public class VerifyAndCommitmentSendWork extends KeywordsCOM {
 			String defaultPath = ctrl.verifyData.getValueByXpath("//*[@id='btnSendDiv']/table[2]/tbody/tr[1]/td/div[2]/input");
 			sendToLogCustom(logexestatus.PASS, logaction.Dropdown, "********************** :defaultPath iLog - " + defaultPath);	
 
-			ctrl.screenCapture.saveShotImage(ctrl.pathVariable.getRelativeLog() + "_CA_pre" + ".jpg");
-
+//			ctrl.screenCapture.saveShotImage(ctrl.pathVariable.getRelativeLog() + "_CA_pre" + ".jpg");
+			capture("CA_Pre_SelectPath");
+			
 			switch(cAPath){
 				case branch:
 					ctrl.dropdown.robotByXpath("//*[@id='btnSendDiv']/table[2]/tbody/tr[1]/td/div[2]/input", 2);
@@ -66,7 +67,8 @@ public class VerifyAndCommitmentSendWork extends KeywordsCOM {
 					
 			}
 			
-			ctrl.screenCapture.saveShotImage(ctrl.pathVariable.getRelativeLog() + "_CA_pos" + ".jpg");
+//			ctrl.screenCapture.saveShotImage(ctrl.pathVariable.getRelativeLog() + "_CA_pos" + ".jpg");
+			capture("CA_Pos_SelectPath");
 			
 			ctrl.button.xpath("//*[@id='btnSendDiv']/table[3]/tbody/tr/td/button");
 			sendToLogCustom(logexestatus.PASS, logaction.Click, "send ส่งงานต่อ");

@@ -1,10 +1,11 @@
 package newsm2;
+import com.AttachFiles;
 import com.GotoApp;
+import com.RequireDocuments;
 import com.SystemBase;
 
 import controller.Controller;
 import creditapproval.*;
-import testdata.CellTag.CATask;
 import testdata.CellTag.Commitment;
 
 public class CreditApproval extends BaseApplication {
@@ -25,42 +26,82 @@ public class CreditApproval extends BaseApplication {
 				ctrl.logCat.sendToLog("AUTO BCOM");
 			case BCOM:
 				ctrl.logCat.sendToLog("BCOM");
-				switch(caeConfig.CAPath){
-					case autoBranch:
-					case branch:
-						caeConfig.runableFlag = verifyState("NEWSM2SBRO", "เลือกคณะกรรมการ");
+				switch(caeConfig.CreditSystem){
+					case IN://------------------------------------------------------------------------------------
+						switch(caeConfig.CAPath){
+							case autoBranch:
+							case branch:
+								caeConfig.runableFlag = verifyState("NEWSM2SBRO", "เลือกคณะกรรมการ");
+								BCOMSelectCommitteeIn(caeConfig.SBRO);
+								break;
+							case autoSection:
+							case section:
+								caeConfig.runableFlag = verifyState("NEWSM2CMDept", "เลือกคณะกรรมการ");
+								BCOMSelectCommitteeIn(caeConfig.CMDept);
+								break;
+						}
+						BCOMCommitment();
+						BCOMPrintCommitment();
 						break;
-					case autoSection:
-					case section:
-						caeConfig.runableFlag = verifyState("NEWSM2CMDept", "เลือกคณะกรรมการ");
-						break;
+						
+					case OUT://------------------------------------------------------------------------------------
+						switch(caeConfig.CAPath){
+							case autoBranch:
+							case branch:
+								caeConfig.runableFlag = verifyState("NEWSM2SBRO", "เลือกคณะกรรมการ");
+								BCOMSelectCommitteeOut(caeConfig.SBRO);
+								break;
+							case autoSection:
+							case section:
+								caeConfig.runableFlag = verifyState("NEWSM2CMDept", "เลือกคณะกรรมการ");
+								BCOMSelectCommitteeOut(caeConfig.CMDept);
+								break;
+						}
+						//Select Committee Out
+						BCOMRecordPrintCommitment();
+						break;					
 				}
-				BCOMSelectCommittee();
-				BCOMCommitment();
 				break;
 				
 			case autoRCOM:
 				ctrl.logCat.sendToLog("AUTO RCOM");
 			case RCOM:
 				ctrl.logCat.sendToLog("RCOM");
-				switch(caeConfig.CAPath){
-					case autoBranch:
-					case branch:
-						caeConfig.runableFlag = verifyState("NEWSM2SBRO", "เลือกคณะกรรมการ");
+				switch(caeConfig.CreditSystem){
+					case IN://------------------------------------------------------------------------------------
+						switch(caeConfig.CAPath){
+							case autoBranch:
+							case branch:
+								caeConfig.runableFlag = verifyState("NEWSM2SBRO", "เลือกคณะกรรมการ");
+								RCOMSelectCommitteeIn(caeConfig.SBRO);
+								break;
+							case autoSection:
+							case section:
+								caeConfig.runableFlag = verifyState("NEWSM2CMDept", "เลือกคณะกรรมการ");
+								RCOMSelectCommitteeIn(caeConfig.CMDept);
+								break;
+						}
+						RCOMCommitment();
+						RCOMPrintCommitment();
 						break;
-					case autoSection:
-					case section:
-						caeConfig.runableFlag = verifyState("NEWSM2CMDept", "เลือกคณะกรรมการ");
-						break;
+						
+					case OUT://------------------------------------------------------------------------------------
+						switch(caeConfig.CAPath){
+							case autoBranch:
+							case branch:
+								caeConfig.runableFlag = verifyState("NEWSM2SBRO", "เลือกคณะกรรมการ");
+								RCOMSelectCommitteeOut(caeConfig.SBRO);
+								break;
+							case autoSection:
+							case section:
+								caeConfig.runableFlag = verifyState("NEWSM2CMDept", "เลือกคณะกรรมการ");
+								RCOMSelectCommitteeOut(caeConfig.CMDept);
+								break;
+						}
+						//Select Committee Out
+						RCOMRecordPrintCommitment();
+						break;				
 				}
-				RCOMSelectCommittee();
-				//RCOMCommitment();
-				/*if(caeConfig.CreditCommitment.equals(Commitment.REQ_PASS) || caeConfig.CreditCommitment.equals(Commitment.REQ_NOTPASS)){
-					RCOMRecordPrintCommitment();
-				}
-				else{
-					RCOMPrintCommitment();
-				}*/
 				break;
 				
 			case autoKSCCOM:
@@ -143,20 +184,26 @@ public class CreditApproval extends BaseApplication {
 		return caeConfig.runableFlag;
 	}
 
-	private boolean RCOMSelectCommittee() {
+	private boolean RCOMSelectCommitteeIn(String user) {
 		openBrowser(SystemBase.LOR);
-		String tmpUser = null;
-		if(caeConfig.CAPath.equals(CATask.branch) || caeConfig.CAPath.equals(CATask.autoBranch)){
-			tmpUser = caeConfig.SBRO;
-		}
-		else if(caeConfig.CAPath.equals(CATask.section) || caeConfig.CAPath.equals(CATask.autoSection)){
-			tmpUser = caeConfig.CMDept;
-		}
-		login(tmpUser, SystemBase.LOR);
+		login(user, SystemBase.LOR);
 		gotoApp();
 		
 		if (caeConfig.runableFlag)
-			caeConfig.runableFlag = new RCOMSelectCommittee(ctrl, caeConfig.CreditSystem,  caeConfig.RCOM).execute();
+			caeConfig.runableFlag = new RCOMSelectCommitteeIn(ctrl, caeConfig.CreditSystem,  caeConfig.RCOM).execute();
+
+		logout();
+
+		return caeConfig.runableFlag;
+	}
+
+	private boolean RCOMSelectCommitteeOut(String user) {
+		openBrowser(SystemBase.LOR);
+		login(user, SystemBase.LOR);
+		gotoApp();
+		
+		if (caeConfig.runableFlag)
+			caeConfig.runableFlag = new RCOMSelectCommitteeOut(ctrl, caeConfig.CreditSystem,  caeConfig.RCOM).execute();
 
 		logout();
 
@@ -172,6 +219,7 @@ public class CreditApproval extends BaseApplication {
 			internalFlag = new GotoApp(ctrl, caeConfig.appID).execute();
 			if (internalFlag)
 				internalFlag = new RCOMCommitment(ctrl, caeConfig.CreditCommitment).execute();
+			document();
 			if (internalFlag)
 				internalFlag = new RCOMCommitmentSendWork(ctrl).execute();
 			logout();
@@ -185,6 +233,7 @@ public class CreditApproval extends BaseApplication {
 		login(caeConfig.RCOMADM, SystemBase.LOR);
 		gotoApp();
 		
+		document();
 		if (caeConfig.runableFlag)
 			caeConfig.runableFlag = new RCOMPrintCommitment(ctrl).execute();
 
@@ -199,9 +248,8 @@ public class CreditApproval extends BaseApplication {
 		gotoApp();
 		
 		if (caeConfig.runableFlag)
-			caeConfig.runableFlag = new RCOMRecordPrintCommitment(ctrl, 
-					caeConfig.CreditCommitment.equals(Commitment.REQ_PASS) ? Commitment.PASS : Commitment.NOTPASS
-			).execute();
+			caeConfig.runableFlag = new RCOMRecordPrintCommitment(ctrl, caeConfig.CreditCommitment).execute();
+		document();
 		if (caeConfig.runableFlag)
 			caeConfig.runableFlag = new RCOMRecordPrintCommitmentSendWork(ctrl).execute();
 		
@@ -210,20 +258,26 @@ public class CreditApproval extends BaseApplication {
 		return caeConfig.runableFlag;
 	}
 	
-	private boolean BCOMSelectCommittee() {
+	private boolean BCOMSelectCommitteeIn(String user) {
 		openBrowser(SystemBase.LOR);
-		String tmpUser = null;
-		if(caeConfig.CAPath.equals(CATask.branch) || caeConfig.CAPath.equals(CATask.autoBranch)){
-			tmpUser = caeConfig.SBRO;
-		}
-		else if(caeConfig.CAPath.equals(CATask.section) || caeConfig.CAPath.equals(CATask.autoSection)){
-			tmpUser = caeConfig.CMDept;
-		}
-		login(tmpUser, SystemBase.LOR);
+		login(user, SystemBase.LOR);
 		gotoApp();
 		
 		if (caeConfig.runableFlag)
-			caeConfig.runableFlag = new BCOMSelectCommittee(ctrl, caeConfig.CreditSystem, caeConfig.BCOM).execute();
+			caeConfig.runableFlag = new BCOMSelectCommitteeIn(ctrl, caeConfig.CreditSystem, caeConfig.BCOM).execute();
+
+		logout();
+
+		return caeConfig.runableFlag;
+	}
+	
+	private boolean BCOMSelectCommitteeOut(String user) {
+		openBrowser(SystemBase.LOR);
+		login(user, SystemBase.LOR);
+		gotoApp();
+		
+		if (caeConfig.runableFlag)
+			caeConfig.runableFlag = new BCOMSelectCommitteeOut(ctrl, caeConfig.CreditSystem, caeConfig.BCOM).execute();
 
 		logout();
 
@@ -239,10 +293,42 @@ public class CreditApproval extends BaseApplication {
 			internalFlag = new GotoApp(ctrl, caeConfig.appID).execute();
 			if (internalFlag)
 				internalFlag = new BCOMCommitment(ctrl, caeConfig.CreditCommitment).execute();
+			document();
 			if (internalFlag)
 				internalFlag = new BCOMCommitmentSendWork(ctrl).execute();
 			logout();
 		}
+		return caeConfig.runableFlag;
+	}
+	
+	private boolean BCOMPrintCommitment() {
+		caeConfig.RCOMADM = searchForRole();
+		openBrowser(SystemBase.LOR);
+		login(caeConfig.RCOMADM, SystemBase.LOR);
+		gotoApp();
+		
+		document();
+		if (caeConfig.runableFlag)
+			caeConfig.runableFlag = new BCOMPrintCommitment(ctrl).execute();
+
+		logout();
+
+		return caeConfig.runableFlag;
+	}
+	private boolean BCOMRecordPrintCommitment(){
+		caeConfig.RCOMADM = searchForRole();
+		openBrowser(SystemBase.LOR);
+		login(caeConfig.RCOMADM, SystemBase.LOR);
+		gotoApp();
+		
+		if (caeConfig.runableFlag)
+			caeConfig.runableFlag = new BCOMRecordPrintCommitment(ctrl, caeConfig.CreditCommitment).execute();
+		document();
+		if (caeConfig.runableFlag)
+			caeConfig.runableFlag = new BCOMRecordPrintCommitmentSendWork(ctrl).execute();
+		
+		logout();
+		
 		return caeConfig.runableFlag;
 	}
 	
@@ -252,7 +338,7 @@ public class CreditApproval extends BaseApplication {
 		gotoApp();
 		
 		if (caeConfig.runableFlag)
-			caeConfig.runableFlag = new CustomerNotification(ctrl).execute();
+			caeConfig.runableFlag = new CustomerNotification(ctrl, caeConfig.ContractPath).execute();
 
 		logout();
 
@@ -260,16 +346,25 @@ public class CreditApproval extends BaseApplication {
 	}
 	
 	private boolean EndApplication() {
-//		openBrowser(SystemBase.LOR);
-//		login(caeConfig.BRO, SystemBase.LOR);
-//		gotoApp();
-//		
-//		if (caeConfig.runableFlag)
-//			caeConfig.runableFlag = new EndApplication(ctrl).execute();
-//
-//		logout();
+		openBrowser(SystemBase.LOR);
+		login(caeConfig.BRO, SystemBase.LOR);
+		gotoApp();
+		
+		if (caeConfig.runableFlag)
+			caeConfig.runableFlag = new EndApplication(ctrl).execute();
+
+		logout();
 
 		caeConfig.runableFlag = false;
+		return caeConfig.runableFlag;
+	}
+	
+	private boolean document() {
+		if (!caeConfig.runableFlag)
+			return false;
+		System.out.println("DOCUMENT DOCUMENT DOCUMENT DOCUMENT DOCUMENT DOCUMENT DOCUMENT");
+		caeConfig.runableFlag = new RequireDocuments(ctrl).execute();
+		caeConfig.runableFlag = new AttachFiles(ctrl).execute();
 		return caeConfig.runableFlag;
 	}
 	

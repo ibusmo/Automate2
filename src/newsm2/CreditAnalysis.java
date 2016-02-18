@@ -73,7 +73,7 @@ public class CreditAnalysis extends BaseApplication {
 
 		if (!caeConfig.runableFlag)
 			return false;
-		caeConfig.runableFlag = new SecSBROToCMDeptAssign(ctrl, caeConfig.CMDept).execute();
+		caeConfig.runableFlag = new SecSBROToCMDeptAssign(ctrl, caeConfig.CMDept, caeConfig.SBROSec).execute();
 
 		logout();
 

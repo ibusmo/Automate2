@@ -7,6 +7,9 @@ import com.SystemBase;
 import com.VerifyAppState;
 
 import controller.Controller;
+import log.LogTag.logaction;
+import log.LogTag.logelement;
+import log.LogTag.logexestatus;
 
 public class BaseApplication {
 	
@@ -75,4 +78,17 @@ public class BaseApplication {
 		return res;
 	}
 	
+	protected void capture(String stepText){
+		ctrl.screenCapture.saveShotImage(ctrl.pathVariable.getRelativeLog() + "_" 
+				+ (++ctrl.imgId) + "_" 
+				+ stepText	+ ".jpg");
+		sendToLogCustom(logexestatus.PASS, logaction.Capture, 
+				String.format("Capture -index: %s -step: %s", ctrl.imgId-1, stepText));
+		caeConfig.runableFlag = true;
+	}
+	
+	protected void sendToLogCustom(logexestatus logexestatus, logaction logaction, String str) {
+		ctrl.logCat.sendToLog(logexestatus, log.LogTag.logoperation.None, log.LogTag.logtab.None, log.LogTag.logsubtab.None, logelement.None,
+				logaction, str);
+	}
 }

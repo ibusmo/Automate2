@@ -10,20 +10,15 @@ import base.KeywordsCOM;
 import controller.Controller;
 import log.LogTag.logaction;
 import log.LogTag.logexestatus;
-import testdata.CellTag.ContractTask;
 
-public class CustomerNotification extends KeywordsCOM {
+public class BCOMPrintCommitment extends KeywordsCOM {
 	
-	ContractTask contractPath;
-	
-	public CustomerNotification(Controller ctrl, ContractTask contractPath) {
+	public BCOMPrintCommitment(Controller ctrl) {
 		super.ctrl = ctrl;
 		
 		super.logoperation 		= log.LogTag.logoperation.Comment;
-		super.logtab 			= log.LogTag.logtab.CustomerNotify;
+		super.logtab 			= log.LogTag.logtab.SendWork;
 		super.logsubtab 		= log.LogTag.logsubtab.None;	
-		
-		this.contractPath = contractPath;
 	}
 	
 	@Override
@@ -38,36 +33,10 @@ public class CustomerNotification extends KeywordsCOM {
 
 			alert();
 
-			String defaultPath = ctrl.verifyData.getValueByXpath("//*[@id='btnSendDiv']/table[2]/tbody/tr[1]/td/div[2]/input");
-			sendToLogCustom(logexestatus.PASS, logaction.Dropdown, "********************** :defaultPath iLog - " + defaultPath);
-
-//			ctrl.screenCapture.saveShotImage(ctrl.pathVariable.getRelativeLog() + "_BranchApproval_pre" + ".jpg");
-			capture("BranchApproval_Pre_SelectPath");
+//			ctrl.dropdown.robotByXpath("//*[@id='btnSendDiv']/table[2]/tbody/tr[1]/td/div[2]/input", 2);
+//			sendToLogCustom(logexestatus.PASS, logaction.Dropdown, "send ส่งงานต่อ");
 			
-			switch(contractPath){
-				case branch:
-					ctrl.dropdown.robotByXpath("//*[@id='btnSendDiv']/table[2]/tbody/tr[1]/td/div[2]/input", 2);
-					sendToLogCustom(logexestatus.PASS, logaction.Dropdown, "ส่งงานไปพิธีการสินเชื่อสาขา BCOM");					
-					break;
-				case section:
-					ctrl.dropdown.robotByXpath("//*[@id='btnSendDiv']/table[2]/tbody/tr[1]/td/div[2]/input", 3);
-					sendToLogCustom(logexestatus.PASS, logaction.Dropdown, "ส่งงานไปพิธีการสินเชื่อเขต RCOM");
-					break;
-
-				case autoBranch:
-					sendToLogCustom(logexestatus.PASS, logaction.Dropdown, "ส่งงานไปพิธีการสินเชื่อสาขา Auto BCOM");		
-					break;
-				case autoSection:
-					sendToLogCustom(logexestatus.PASS, logaction.Dropdown, "ส่งงานไปพิธีการสินเชื่อเขต Auto RCOM");
-					break;
-					
-				default:
-					break;
-			}
-
-			capture("BranchApproval_Pos_SelectPath");
-			
-			ctrl.button.xpath("//*[@id='btnSendDiv']/table[3]/tbody/tr/td/button");
+			ctrl.button.xpath("//*[@id='btnSendDiv']/table[2]/tbody/tr/td/button");
 			sendToLogCustom(logexestatus.PASS, logaction.Click, "send ส่งงานต่อ");
 
 			alert();

@@ -158,6 +158,21 @@ public class CreditApplication extends BaseApplication {
 					return false;
 				caeConfig.runableFlag = new AddLoanForm(ctrl, sheetType.BookGarantee ,i).execute();
 			}
+			for (int i = 1; i <= caeConfig.ComProNote; i++) {
+				if (!caeConfig.runableFlag)
+					return false;
+				caeConfig.runableFlag = new AddLoanForm(ctrl, sheetType.ComProNote ,i).execute();
+			}
+			for (int i = 1; i <= caeConfig.ComBookGarantee; i++) {
+				if (!caeConfig.runableFlag)
+					return false;
+				caeConfig.runableFlag = new AddLoanForm(ctrl, sheetType.ComBookGarantee ,i).execute();
+			}
+			for (int i = 1; i <= caeConfig.MoneyNote; i++) {
+				if (!caeConfig.runableFlag)
+					return false;
+				caeConfig.runableFlag = new AddLoanForm(ctrl, sheetType.MoneyNote ,i).execute();
+			}
 			for (int i = 1; i <= caeConfig.OD; i++) {
 				if (!caeConfig.runableFlag)
 					return false;

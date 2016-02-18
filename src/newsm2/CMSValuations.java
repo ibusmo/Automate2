@@ -26,7 +26,7 @@ public class CMSValuations extends BaseApplication {
 			if (!caeConfig.runableFlag)
 				return false;
 			caeConfig.runableFlag = new ListOfCMS(ctrl, appID).execute();
-
+			capture("CMS");
 			logout();
 		}
 		return caeConfig.runableFlag;

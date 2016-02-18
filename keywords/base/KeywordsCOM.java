@@ -283,6 +283,15 @@ public abstract class KeywordsCOM{
 		return true;
 	}	
 	
+	protected boolean capture(String stepText){
+		ctrl.screenCapture.saveShotImage(ctrl.pathVariable.getRelativeLog() + "_" 
+				+ (++ctrl.imgId) + "_" 
+				+ stepText	+ ".jpg");
+		sendToLogCustom(logexestatus.PASS, logaction.Capture, 
+				String.format("Capture -index: %s -step: %s", ctrl.imgId-1, stepText));	
+		return true;
+	}
+	
 	protected boolean alert(){
 		try{
 			ctrl.alertHandle.execute();
@@ -327,5 +336,7 @@ public abstract class KeywordsCOM{
 	
 	protected void takeCapture(){
 		ctrl.screenCapture.saveShotImage(ctrl.pathVariable.getRelativeLog() + ".jpg");
+		sendToLogCustom(logexestatus.PASS, logaction.Capture, 
+				String.format("Capture -Crash Unexpected Test -index: %s", ctrl.imgId-1));	
 	}
 }

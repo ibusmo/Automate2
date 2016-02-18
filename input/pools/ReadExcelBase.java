@@ -22,6 +22,9 @@ public abstract class ReadExcelBase implements ReadExcelController {
 		else if(sheetStr.matches("longtermloan"))		return sheetType.LongTermLoan;
 		else if(sheetStr.matches("promissorynote"))		return sheetType.PromissoryNote;
 		else if(sheetStr.matches("bookgarantee"))		return sheetType.BookGarantee;
+		else if(sheetStr.matches("compronote"))			return sheetType.ComProNote;
+		else if(sheetStr.matches("combookgarantee"))	return sheetType.ComBookGarantee;
+		else if(sheetStr.matches("moneynote"))			return sheetType.MoneyNote;
 		else if(sheetStr.matches("od"))					return sheetType.OD;
 		
 		else if(sheetStr.matches("landandbuilding"))	return sheetType.CMSLandBuilding;
@@ -39,6 +42,7 @@ public abstract class ReadExcelBase implements ReadExcelController {
 		else if(sheetStr.matches("credit"))				return sheetType.Credit;
 		else if(sheetStr.matches("system"))				return sheetType.System;
 		else if(sheetStr.matches("commitment"))			return sheetType.Commitment;
+		else if(sheetStr.matches("contract"))			return sheetType.Contract;
 
 		if(sheetStr.matches("bro"))						return sheetType.BRO;
 		if(sheetStr.matches("sbro"))					return sheetType.SBRO;

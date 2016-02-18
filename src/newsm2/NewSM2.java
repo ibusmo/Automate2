@@ -19,21 +19,22 @@ public class NewSM2 {
 		caeConfig.loadConfigAndSetting(ctrl.testConfig.getData());
 		caeConfig.showSetting();
 		
+//		caeConfig.appID = "038302590080";
+//		caeConfig.BRO = "ChotikaP";
+//		caeConfig.SBRO = "SatapornM";
+		
 		new CreditApplication(ctrl, caeConfig).run();		
-		interrupt.waitKey();
-
+//		interrupt.waitKey();
+		
 		new CMSValuations(ctrl, caeConfig).run();			
-		interrupt.waitKey();
+//		interrupt.waitKey();
 		
 		new CreditAnalysis(ctrl, caeConfig).run();			
 		interrupt.waitKey();
 		
-//		caeConfig.appID = "038302590033";
-//		caeConfig.SBRO = "SatapornM";
-		
 		new CreditApproval(ctrl, caeConfig).run();			
-		interrupt.waitKey();
-
+//		interrupt.waitKey();
+		
 //		new Contract(ctrl, caeConfig).run();				
 //		interrupt.waitKey();
 		

@@ -22,11 +22,11 @@ public class Main {
 		PathVariable pathVariable = new PathVariable();
 		pathVariable.setLORBaseURL("http://172.31.1.41:55011/LOR/");
 		pathVariable.setCMSBaseURL("http://172.31.1.42:9080/CMS/");
-		pathVariable.setOffsetPath("C:\\testdata\\LOR2SIT2");
+		pathVariable.setOffsetPath("C:\\testdata\\LOR2SIT3");
 		pathVariable.setExcelType(".xls");
 		pathVariable.setLogType(".log");
 		
-		pathVariable.setSpecify("new");
+		pathVariable.setSpecify("9");
 		
 		return pathVariable;
 	}

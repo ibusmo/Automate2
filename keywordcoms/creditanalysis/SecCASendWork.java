@@ -40,11 +40,15 @@ public class SecCASendWork extends KeywordsCOM {
 			sendToLogCustom(logexestatus.PASS, logaction.Click, "send ส่งงานต่อ");
 
 			alert();
+			alert();
 			
 			if(ctrl.verifyData.urlContains("inboxAction.do")==false){
 				sendToLogCustom(logexestatus.FAIL, logaction.Verify, "Verify Send ส่งงาน");
 				return false;
 			}
+
+			capture("CA_SendWork");
+			
 			sendToLogCustom(logexestatus.PASS, logaction.Verify, "Verify Send ส่งงาน");
 			
 		}catch (TimeoutException e) {

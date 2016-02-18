@@ -45,7 +45,8 @@ public class SecCACommentSendWork extends KeywordsCOM {
 			String defaultPath = ctrl.verifyData.getValueByXpath("//*[@id='btnSendDiv']/table[2]/tbody/tr[1]/td/div[2]/input");
 			sendToLogCustom(logexestatus.PASS, logaction.Dropdown, "********************** :defaultPath iLog - " + defaultPath);
 			
-			ctrl.screenCapture.saveShotImage(ctrl.pathVariable.getRelativeLog() + "_SecApproval_pre" + ".jpg");
+//			ctrl.screenCapture.saveShotImage(ctrl.pathVariable.getRelativeLog() + "_SecApproval_pre" + ".jpg");
+			capture("SecApproval_Pre_SelectPath");
 			
 			switch(creditPath){
 				case RCOM:
@@ -76,7 +77,8 @@ public class SecCACommentSendWork extends KeywordsCOM {
 					break;
 			}
 
-			ctrl.screenCapture.saveShotImage(ctrl.pathVariable.getRelativeLog() + "_SecApproval_pos" + ".jpg");
+//			ctrl.screenCapture.saveShotImage(ctrl.pathVariable.getRelativeLog() + "_SecApproval_pos" + ".jpg");
+			capture("SecApproval_Pos_SelectPath");
 			
 			ctrl.button.xpath("//*[@id='btnSendDiv']/table[3]/tbody/tr/td/button");
 			sendToLogCustom(logexestatus.PASS, logaction.Click, "send ส่งงานต่อ");

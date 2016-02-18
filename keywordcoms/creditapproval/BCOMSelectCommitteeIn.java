@@ -12,12 +12,12 @@ import log.LogTag.logaction;
 import log.LogTag.logexestatus;
 import testdata.CellTag.ApprSystem;
 
-public class BCOMSelectCommittee extends KeywordsCOM{
+public class BCOMSelectCommitteeIn extends KeywordsCOM{
 
 	private String[] BCOM;
 	private ApprSystem creditSystem;
 	
-	public BCOMSelectCommittee(Controller ctrl, ApprSystem creditSystem, String[] BCOM){
+	public BCOMSelectCommitteeIn(Controller ctrl, ApprSystem creditSystem, String[] BCOM){
 		super.ctrl = ctrl;
 
 		super.logoperation 		= log.LogTag.logoperation.BCOM;
